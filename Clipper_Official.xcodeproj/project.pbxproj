@@ -16,6 +16,10 @@
 		90FFF5E02EDF7A5400B4B1F1 /* Clipper_OfficialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FFF5DF2EDF7A5400B4B1F1 /* Clipper_OfficialTests.swift */; };
 		90FFF5EA2EDF7A5400B4B1F1 /* Clipper_OfficialUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FFF5E92EDF7A5400B4B1F1 /* Clipper_OfficialUITests.swift */; };
 		90FFF5EC2EDF7A5400B4B1F1 /* Clipper_OfficialUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FFF5EB2EDF7A5400B4B1F1 /* Clipper_OfficialUITestsLaunchTests.swift */; };
+		90FFF5FA2EDF7A6F00B4B1F1 /* BarberShop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FFF5F82EDF7A6E00B4B1F1 /* BarberShop.swift */; };
+		90FFF5FB2EDF7A6F00B4B1F1 /* EventPriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FFF5F92EDF7A6F00B4B1F1 /* EventPriorityQueue.swift */; };
+		90FFF5FE2EDF7AEA00B4B1F1 /* testfile2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 90FFF5FC2EDF7AE900B4B1F1 /* testfile2.txt */; };
+		90FFF5FF2EDF7AEA00B4B1F1 /* testfile.txt in Resources */ = {isa = PBXBuildFile; fileRef = 90FFF5FD2EDF7AEA00B4B1F1 /* testfile.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +53,10 @@
 		90FFF5E52EDF7A5400B4B1F1 /* Clipper_OfficialUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Clipper_OfficialUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		90FFF5E92EDF7A5400B4B1F1 /* Clipper_OfficialUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clipper_OfficialUITests.swift; sourceTree = "<group>"; };
 		90FFF5EB2EDF7A5400B4B1F1 /* Clipper_OfficialUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clipper_OfficialUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		90FFF5F82EDF7A6E00B4B1F1 /* BarberShop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarberShop.swift; sourceTree = "<group>"; };
+		90FFF5F92EDF7A6F00B4B1F1 /* EventPriorityQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventPriorityQueue.swift; sourceTree = "<group>"; };
+		90FFF5FC2EDF7AE900B4B1F1 /* testfile2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testfile2.txt; sourceTree = "<group>"; };
+		90FFF5FD2EDF7AEA00B4B1F1 /* testfile.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testfile.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +87,8 @@
 		90FFF5BC2EDF7A5000B4B1F1 = {
 			isa = PBXGroup;
 			children = (
+				90FFF5FD2EDF7AEA00B4B1F1 /* testfile.txt */,
+				90FFF5FC2EDF7AE900B4B1F1 /* testfile2.txt */,
 				90FFF5C72EDF7A5000B4B1F1 /* Clipper_Official */,
 				90FFF5DE2EDF7A5400B4B1F1 /* Clipper_OfficialTests */,
 				90FFF5E82EDF7A5400B4B1F1 /* Clipper_OfficialUITests */,
@@ -99,6 +109,8 @@
 		90FFF5C72EDF7A5000B4B1F1 /* Clipper_Official */ = {
 			isa = PBXGroup;
 			children = (
+				90FFF5F82EDF7A6E00B4B1F1 /* BarberShop.swift */,
+				90FFF5F92EDF7A6F00B4B1F1 /* EventPriorityQueue.swift */,
 				90FFF5C82EDF7A5000B4B1F1 /* AppDelegate.swift */,
 				90FFF5CA2EDF7A5000B4B1F1 /* SceneDelegate.swift */,
 				90FFF5CC2EDF7A5000B4B1F1 /* ViewController.swift */,
@@ -232,7 +244,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				90FFF5D52EDF7A5300B4B1F1 /* LaunchScreen.storyboard in Resources */,
+				90FFF5FE2EDF7AEA00B4B1F1 /* testfile2.txt in Resources */,
 				90FFF5D22EDF7A5300B4B1F1 /* Assets.xcassets in Resources */,
+				90FFF5FF2EDF7AEA00B4B1F1 /* testfile.txt in Resources */,
 				90FFF5D02EDF7A5000B4B1F1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,8 +273,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				90FFF5CD2EDF7A5000B4B1F1 /* ViewController.swift in Sources */,
+				90FFF5FB2EDF7A6F00B4B1F1 /* EventPriorityQueue.swift in Sources */,
 				90FFF5C92EDF7A5000B4B1F1 /* AppDelegate.swift in Sources */,
 				90FFF5CB2EDF7A5000B4B1F1 /* SceneDelegate.swift in Sources */,
+				90FFF5FA2EDF7A6F00B4B1F1 /* BarberShop.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
