@@ -1,0 +1,607 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		90FFF5C92EDF7A5000B4B1F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FFF5C82EDF7A5000B4B1F1 /* AppDelegate.swift */; };
+		90FFF5CB2EDF7A5000B4B1F1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FFF5CA2EDF7A5000B4B1F1 /* SceneDelegate.swift */; };
+		90FFF5CD2EDF7A5000B4B1F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FFF5CC2EDF7A5000B4B1F1 /* ViewController.swift */; };
+		90FFF5D02EDF7A5000B4B1F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90FFF5CE2EDF7A5000B4B1F1 /* Main.storyboard */; };
+		90FFF5D22EDF7A5300B4B1F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90FFF5D12EDF7A5300B4B1F1 /* Assets.xcassets */; };
+		90FFF5D52EDF7A5300B4B1F1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 90FFF5D32EDF7A5300B4B1F1 /* LaunchScreen.storyboard */; };
+		90FFF5E02EDF7A5400B4B1F1 /* Clipper_OfficialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FFF5DF2EDF7A5400B4B1F1 /* Clipper_OfficialTests.swift */; };
+		90FFF5EA2EDF7A5400B4B1F1 /* Clipper_OfficialUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FFF5E92EDF7A5400B4B1F1 /* Clipper_OfficialUITests.swift */; };
+		90FFF5EC2EDF7A5400B4B1F1 /* Clipper_OfficialUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FFF5EB2EDF7A5400B4B1F1 /* Clipper_OfficialUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		90FFF5DC2EDF7A5400B4B1F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 90FFF5BD2EDF7A5000B4B1F1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 90FFF5C42EDF7A5000B4B1F1;
+			remoteInfo = Clipper_Official;
+		};
+		90FFF5E62EDF7A5400B4B1F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 90FFF5BD2EDF7A5000B4B1F1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 90FFF5C42EDF7A5000B4B1F1;
+			remoteInfo = Clipper_Official;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		90FFF5C52EDF7A5000B4B1F1 /* Clipper_Official.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clipper_Official.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		90FFF5C82EDF7A5000B4B1F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		90FFF5CA2EDF7A5000B4B1F1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		90FFF5CC2EDF7A5000B4B1F1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		90FFF5CF2EDF7A5000B4B1F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		90FFF5D12EDF7A5300B4B1F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		90FFF5D42EDF7A5300B4B1F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		90FFF5D62EDF7A5300B4B1F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		90FFF5DB2EDF7A5400B4B1F1 /* Clipper_OfficialTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Clipper_OfficialTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		90FFF5DF2EDF7A5400B4B1F1 /* Clipper_OfficialTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clipper_OfficialTests.swift; sourceTree = "<group>"; };
+		90FFF5E52EDF7A5400B4B1F1 /* Clipper_OfficialUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Clipper_OfficialUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		90FFF5E92EDF7A5400B4B1F1 /* Clipper_OfficialUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clipper_OfficialUITests.swift; sourceTree = "<group>"; };
+		90FFF5EB2EDF7A5400B4B1F1 /* Clipper_OfficialUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clipper_OfficialUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		90FFF5C22EDF7A5000B4B1F1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		90FFF5D82EDF7A5400B4B1F1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		90FFF5E22EDF7A5400B4B1F1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		90FFF5BC2EDF7A5000B4B1F1 = {
+			isa = PBXGroup;
+			children = (
+				90FFF5C72EDF7A5000B4B1F1 /* Clipper_Official */,
+				90FFF5DE2EDF7A5400B4B1F1 /* Clipper_OfficialTests */,
+				90FFF5E82EDF7A5400B4B1F1 /* Clipper_OfficialUITests */,
+				90FFF5C62EDF7A5000B4B1F1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		90FFF5C62EDF7A5000B4B1F1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				90FFF5C52EDF7A5000B4B1F1 /* Clipper_Official.app */,
+				90FFF5DB2EDF7A5400B4B1F1 /* Clipper_OfficialTests.xctest */,
+				90FFF5E52EDF7A5400B4B1F1 /* Clipper_OfficialUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		90FFF5C72EDF7A5000B4B1F1 /* Clipper_Official */ = {
+			isa = PBXGroup;
+			children = (
+				90FFF5C82EDF7A5000B4B1F1 /* AppDelegate.swift */,
+				90FFF5CA2EDF7A5000B4B1F1 /* SceneDelegate.swift */,
+				90FFF5CC2EDF7A5000B4B1F1 /* ViewController.swift */,
+				90FFF5CE2EDF7A5000B4B1F1 /* Main.storyboard */,
+				90FFF5D12EDF7A5300B4B1F1 /* Assets.xcassets */,
+				90FFF5D32EDF7A5300B4B1F1 /* LaunchScreen.storyboard */,
+				90FFF5D62EDF7A5300B4B1F1 /* Info.plist */,
+			);
+			path = Clipper_Official;
+			sourceTree = "<group>";
+		};
+		90FFF5DE2EDF7A5400B4B1F1 /* Clipper_OfficialTests */ = {
+			isa = PBXGroup;
+			children = (
+				90FFF5DF2EDF7A5400B4B1F1 /* Clipper_OfficialTests.swift */,
+			);
+			path = Clipper_OfficialTests;
+			sourceTree = "<group>";
+		};
+		90FFF5E82EDF7A5400B4B1F1 /* Clipper_OfficialUITests */ = {
+			isa = PBXGroup;
+			children = (
+				90FFF5E92EDF7A5400B4B1F1 /* Clipper_OfficialUITests.swift */,
+				90FFF5EB2EDF7A5400B4B1F1 /* Clipper_OfficialUITestsLaunchTests.swift */,
+			);
+			path = Clipper_OfficialUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		90FFF5C42EDF7A5000B4B1F1 /* Clipper_Official */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 90FFF5EF2EDF7A5400B4B1F1 /* Build configuration list for PBXNativeTarget "Clipper_Official" */;
+			buildPhases = (
+				90FFF5C12EDF7A5000B4B1F1 /* Sources */,
+				90FFF5C22EDF7A5000B4B1F1 /* Frameworks */,
+				90FFF5C32EDF7A5000B4B1F1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Clipper_Official;
+			productName = Clipper_Official;
+			productReference = 90FFF5C52EDF7A5000B4B1F1 /* Clipper_Official.app */;
+			productType = "com.apple.product-type.application";
+		};
+		90FFF5DA2EDF7A5400B4B1F1 /* Clipper_OfficialTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 90FFF5F22EDF7A5400B4B1F1 /* Build configuration list for PBXNativeTarget "Clipper_OfficialTests" */;
+			buildPhases = (
+				90FFF5D72EDF7A5400B4B1F1 /* Sources */,
+				90FFF5D82EDF7A5400B4B1F1 /* Frameworks */,
+				90FFF5D92EDF7A5400B4B1F1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				90FFF5DD2EDF7A5400B4B1F1 /* PBXTargetDependency */,
+			);
+			name = Clipper_OfficialTests;
+			productName = Clipper_OfficialTests;
+			productReference = 90FFF5DB2EDF7A5400B4B1F1 /* Clipper_OfficialTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		90FFF5E42EDF7A5400B4B1F1 /* Clipper_OfficialUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 90FFF5F52EDF7A5400B4B1F1 /* Build configuration list for PBXNativeTarget "Clipper_OfficialUITests" */;
+			buildPhases = (
+				90FFF5E12EDF7A5400B4B1F1 /* Sources */,
+				90FFF5E22EDF7A5400B4B1F1 /* Frameworks */,
+				90FFF5E32EDF7A5400B4B1F1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				90FFF5E72EDF7A5400B4B1F1 /* PBXTargetDependency */,
+			);
+			name = Clipper_OfficialUITests;
+			productName = Clipper_OfficialUITests;
+			productReference = 90FFF5E52EDF7A5400B4B1F1 /* Clipper_OfficialUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		90FFF5BD2EDF7A5000B4B1F1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					90FFF5C42EDF7A5000B4B1F1 = {
+						CreatedOnToolsVersion = 14.3.1;
+					};
+					90FFF5DA2EDF7A5400B4B1F1 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = 90FFF5C42EDF7A5000B4B1F1;
+					};
+					90FFF5E42EDF7A5400B4B1F1 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = 90FFF5C42EDF7A5000B4B1F1;
+					};
+				};
+			};
+			buildConfigurationList = 90FFF5C02EDF7A5000B4B1F1 /* Build configuration list for PBXProject "Clipper_Official" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 90FFF5BC2EDF7A5000B4B1F1;
+			productRefGroup = 90FFF5C62EDF7A5000B4B1F1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				90FFF5C42EDF7A5000B4B1F1 /* Clipper_Official */,
+				90FFF5DA2EDF7A5400B4B1F1 /* Clipper_OfficialTests */,
+				90FFF5E42EDF7A5400B4B1F1 /* Clipper_OfficialUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		90FFF5C32EDF7A5000B4B1F1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				90FFF5D52EDF7A5300B4B1F1 /* LaunchScreen.storyboard in Resources */,
+				90FFF5D22EDF7A5300B4B1F1 /* Assets.xcassets in Resources */,
+				90FFF5D02EDF7A5000B4B1F1 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		90FFF5D92EDF7A5400B4B1F1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		90FFF5E32EDF7A5400B4B1F1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		90FFF5C12EDF7A5000B4B1F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				90FFF5CD2EDF7A5000B4B1F1 /* ViewController.swift in Sources */,
+				90FFF5C92EDF7A5000B4B1F1 /* AppDelegate.swift in Sources */,
+				90FFF5CB2EDF7A5000B4B1F1 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		90FFF5D72EDF7A5400B4B1F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				90FFF5E02EDF7A5400B4B1F1 /* Clipper_OfficialTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		90FFF5E12EDF7A5400B4B1F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				90FFF5EA2EDF7A5400B4B1F1 /* Clipper_OfficialUITests.swift in Sources */,
+				90FFF5EC2EDF7A5400B4B1F1 /* Clipper_OfficialUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		90FFF5DD2EDF7A5400B4B1F1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 90FFF5C42EDF7A5000B4B1F1 /* Clipper_Official */;
+			targetProxy = 90FFF5DC2EDF7A5400B4B1F1 /* PBXContainerItemProxy */;
+		};
+		90FFF5E72EDF7A5400B4B1F1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 90FFF5C42EDF7A5000B4B1F1 /* Clipper_Official */;
+			targetProxy = 90FFF5E62EDF7A5400B4B1F1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		90FFF5CE2EDF7A5000B4B1F1 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				90FFF5CF2EDF7A5000B4B1F1 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		90FFF5D32EDF7A5300B4B1F1 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				90FFF5D42EDF7A5300B4B1F1 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		90FFF5ED2EDF7A5400B4B1F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		90FFF5EE2EDF7A5400B4B1F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		90FFF5F02EDF7A5400B4B1F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = R34FE4TE98;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Clipper_Official/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.just4fun.Clipper-Official";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		90FFF5F12EDF7A5400B4B1F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = R34FE4TE98;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Clipper_Official/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.just4fun.Clipper-Official";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		90FFF5F32EDF7A5400B4B1F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = R34FE4TE98;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.just4fun.Clipper-OfficialTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Clipper_Official.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Clipper_Official";
+			};
+			name = Debug;
+		};
+		90FFF5F42EDF7A5400B4B1F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = R34FE4TE98;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.just4fun.Clipper-OfficialTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Clipper_Official.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Clipper_Official";
+			};
+			name = Release;
+		};
+		90FFF5F62EDF7A5400B4B1F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = R34FE4TE98;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.just4fun.Clipper-OfficialUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Clipper_Official;
+			};
+			name = Debug;
+		};
+		90FFF5F72EDF7A5400B4B1F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = R34FE4TE98;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.just4fun.Clipper-OfficialUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Clipper_Official;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		90FFF5C02EDF7A5000B4B1F1 /* Build configuration list for PBXProject "Clipper_Official" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				90FFF5ED2EDF7A5400B4B1F1 /* Debug */,
+				90FFF5EE2EDF7A5400B4B1F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		90FFF5EF2EDF7A5400B4B1F1 /* Build configuration list for PBXNativeTarget "Clipper_Official" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				90FFF5F02EDF7A5400B4B1F1 /* Debug */,
+				90FFF5F12EDF7A5400B4B1F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		90FFF5F22EDF7A5400B4B1F1 /* Build configuration list for PBXNativeTarget "Clipper_OfficialTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				90FFF5F32EDF7A5400B4B1F1 /* Debug */,
+				90FFF5F42EDF7A5400B4B1F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		90FFF5F52EDF7A5400B4B1F1 /* Build configuration list for PBXNativeTarget "Clipper_OfficialUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				90FFF5F62EDF7A5400B4B1F1 /* Debug */,
+				90FFF5F72EDF7A5400B4B1F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 90FFF5BD2EDF7A5000B4B1F1 /* Project object */;
+}
