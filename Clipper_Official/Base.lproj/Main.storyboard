@@ -56,10 +56,15 @@
                                         <rect key="frame" x="762" y="178" width="83" height="64"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="QNW-YZ-YRj">
+                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" value="0.5" minValue="0.0" maxValue="1" maximumValueImage="fas" translatesAutoresizingMaskIntoConstraints="NO" id="QNW-YZ-YRj">
                                         <rect key="frame" x="146" y="100" width="160" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.94852943700000003" green="0.92601592310000003" blue="0.1116295288" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="minimumTrackTintColor" systemColor="opaqueSeparatorColor"/>
+                                        <color key="maximumTrackTintColor" systemColor="systemRedColor"/>
+                                        <connections>
+                                            <action selector="timescaleSliderMoved:" destination="BYZ-38-t0r" eventType="valueChanged" id="h1K-NN-sy2"/>
+                                        </connections>
                                     </slider>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="tintColor"/>
@@ -193,7 +198,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Door_Open" translatesAutoresizingMaskIntoConstraints="NO" id="xzQ-jb-Ynr">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Door_Closed" translatesAutoresizingMaskIntoConstraints="NO" id="xzQ-jb-Ynr">
                                         <rect key="frame" x="362" y="166" width="75" height="98"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
@@ -207,10 +212,26 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" systemColor="systemBrownColor"/>
                                     </view>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Door_Open" translatesAutoresizingMaskIntoConstraints="NO" id="rTL-yN-e24">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Door_Closed" translatesAutoresizingMaskIntoConstraints="NO" id="rTL-yN-e24">
                                         <rect key="frame" x="8" y="165" width="75" height="98"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Barber_Pole" translatesAutoresizingMaskIntoConstraints="NO" id="2Kk-2l-U4Z">
+                                        <rect key="frame" x="-43" y="172" width="55" height="125"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Barber_Pole" translatesAutoresizingMaskIntoConstraints="NO" id="DgS-IJ-XHv">
+                                        <rect key="frame" x="450" y="172" width="55" height="125"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="🙂" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pox-5E-hJ2">
+                                        <rect key="frame" x="6" y="288" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" systemColor="systemPurpleColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="38"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nEa-6J-38i" customClass="WallClock" customModule="Clipper_Official" customModuleProvider="target">
                                         <rect key="frame" x="79" y="8" width="120" height="33"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -247,7 +268,7 @@
                         <outlet property="leftDoor" destination="xzQ-jb-Ynr" id="LXS-d4-n60"/>
                         <outlet property="rightDoor" destination="rTL-yN-e24" id="QWD-y2-M7D"/>
                         <outlet property="shopView" destination="vyo-CC-WdB" id="J8H-JQ-ziP"/>
-                        <outlet property="timeScaleSlider" destination="QNW-YZ-YRj" id="mDF-9j-Rlf"/>
+                        <outlet property="timescaleSlider" destination="QNW-YZ-YRj" id="1cm-PM-esp"/>
                         <outlet property="wallClock" destination="nEa-6J-38i" id="jx2-Cd-jD8"/>
                         <outlet property="waves_1" destination="cmc-MO-k3c" id="HoZ-OF-1v1"/>
                         <outlet property="waves_2" destination="L7V-oh-xc9" id="HSP-oP-kbI"/>
@@ -267,10 +288,15 @@
     </scenes>
     <resources>
         <image name="Barber_Chair" width="524" height="712"/>
+        <image name="Barber_Pole" width="364" height="1502"/>
         <image name="Clipper_Poster" width="1920" height="1246"/>
-        <image name="Door_Open" width="142" height="264"/>
+        <image name="Door_Closed" width="136" height="220"/>
         <image name="Waiting_Bench" width="1296" height="376"/>
         <image name="Waves" width="1866" height="552"/>
+        <image name="fas" width="128" height="128"/>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
@@ -282,6 +308,9 @@
         </systemColor>
         <systemColor name="systemPurpleColor">
             <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

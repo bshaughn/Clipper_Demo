@@ -60,6 +60,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var waves_8: UIImageView!
     @IBOutlet weak var waves_9: UIImageView!
     
+    var visibleWaves = [UIImageView]()
+    
     @IBOutlet weak var chair_1_customer: UILabel!
     @IBOutlet weak var chair_2_customer: UILabel!
     @IBOutlet weak var chair_3_customer: UILabel!
@@ -72,26 +74,87 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var wallClock: WallClock!
     
+    @IBOutlet weak var timescaleSlider: UISlider!
+    
+    @IBAction func timescaleSliderMoved(_ sender: Any) {
+        let sliderValue = (sender as! UISlider).value
+        
+        barberShop.timeUISlider = Double(sliderValue)
+    }
+    
     var currentTime = -1
     
     let barberShop = BarberShop()
     
+    var viewCustomers = [Customer]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        timeScaleSlider.transform = CGAffineTransform.init(rotationAngle: -CGFloat.pi/2)
+        
+        timescaleSlider.transform = CGAffineTransform.init(rotationAngle: -CGFloat.pi/2)
+    
+        let pauseImage = UIImage(systemName: "forward.fill")
+        let ffImage = UIImage(systemName: "pause.fill")
         
         barberShop.barberShopDelegate = self
         
         wallClock.setTime(st: barberShop.currentTime)
+        
+        timescaleSlider.value = Float(barberShop.timeUISlider)
+        
+        waves_1.alpha = 0
+        waves_2.alpha = 0
+        waves_3.alpha = 0
+        waves_4.alpha = 0
+        waves_5.alpha = 0
+        waves_6.alpha = 0
+        waves_7.alpha = 0
+        waves_8.alpha = 0
+        waves_9.alpha = 0
     }
 
-
+    func moveWaves() {
+       let wavesArray = [waves_1, waves_2, waves_3, waves_4, waves_5, waves_6, waves_7, waves_8, waves_9]
+        
+        let alphas = [0.0, 0.1, 0.4, 1.0, 0.5, 0.3, 0.05]
+        
+        
+        if visibleWaves.count < 2 {
+            var numWaves = Int.random(in: 1...3)
+            
+            while numWaves > 0 {
+                let waveIndex = wavesArray.indices.randomElement()
+                let visibleWave:UIImageView = wavesArray[waveIndex!]!
+                visibleWave.alpha = 0.0
+                visibleWaves.append(visibleWave)
+                numWaves -= 1
+            }
+        }
+        
+        for wave in visibleWaves {
+            
+            let waveAlpha = Double(round(100 * wave.alpha) / 100)
+            
+            let alphaIndex = alphas.firstIndex(of: waveAlpha)
+            
+            if alphaIndex == alphas.count-1 {
+                visibleWaves.remove(at: visibleWaves.firstIndex(of: wave)!)
+            }
+            else {
+                
+                wave.alpha = alphas[alphaIndex!+1]
+            }
+            
+        }
+    }
 }
 
 extension ViewController: BarberShopDelegate {
     func didUpdateCurrentTime() {
         wallClock.incrementTime()
+        
+        moveWaves()
     }
     
     func barberDidArrive() {
@@ -112,6 +175,17 @@ extension ViewController: BarberShopDelegate {
     
     func customerCursing() {
         //
+    }
+    
+    func shopOpenStatus(isOpen: Bool) {
+        if isOpen {
+            rightDoor.image = UIImage(named: "Door_Open")
+            leftDoor.image = UIImage(named: "Door_Open")
+        }
+        else {
+            rightDoor.image = UIImage(named: "Door_Closed")
+            leftDoor.image = UIImage(named: "Door_Clsoed")
+        }
     }
     
     

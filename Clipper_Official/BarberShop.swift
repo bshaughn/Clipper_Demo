@@ -14,6 +14,7 @@ protocol BarberShopDelegate {
     func customerFrustrated()
     func customerSatisfied()
     func customerCursing()
+    func shopOpenStatus(isOpen:Bool)
 }
 
 let READ_EVENTS_FROM_FILE = false  // Id rather do this with Swift flags; for demo we'll just use a const
@@ -96,7 +97,8 @@ struct ShiftTwo {
 class BarberShop: ObservableObject {
     let MAX_TIMESCALE = 22 // we'll try a 1-10 timescale, with 10 being the fastest. 0 is pause
     let MIN_TIMESCALE = 0
-    let MIN_TIMEBUFFER = 4
+//    let MIN_TIMEBUFFER = 4
+    var MIN_TIMEBUFFER = 80
     
     var shift_1 = ShiftOne()
     var shift_2 = ShiftTwo()
@@ -161,6 +163,19 @@ class BarberShop: ObservableObject {
         didSet {
             timeScale = 22 - Int(22.0*timeUISlider)
             print("Timescale is now \(timeScale)")
+            
+            if timeUISlider >= 0 && timeUISlider <= 0.4 {
+                MIN_TIMEBUFFER = 80
+            }
+            
+            if timeUISlider > 0.4 && timeUISlider <= 0.8 {
+                MIN_TIMEBUFFER = 20
+            }
+            
+            if timeUISlider > 0.8 {
+                MIN_TIMEBUFFER = 6
+            }
+            
         }
     }
     
@@ -249,6 +264,9 @@ class BarberShop: ObservableObject {
                     }
                 }
 
+            }
+            if barberShopDelegate != nil {
+                barberShopDelegate?.shopOpenStatus(isOpen: isOpen)
             }
         }
     }
