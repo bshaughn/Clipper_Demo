@@ -7,11 +7,21 @@
 
 import Foundation
 
+protocol BarberShopDelegate {
+    func didUpdateCurrentTime()
+    func barberDidArrive()
+    func customerDidArrive()
+    func customerFrustrated()
+    func customerSatisfied()
+    func customerCursing()
+}
+
 let READ_EVENTS_FROM_FILE = false  // Id rather do this with Swift flags; for demo we'll just use a const
 
 struct Barber: Identifiable {
     let id: UUID
     let name: String
+    let avatar: String
 }
 
 struct Customer {
@@ -56,13 +66,13 @@ struct ShiftOne {
     
     init() {
         var uuid = UUID()
-        let barber_1 = Barber(id: uuid, name: "Matt Andis")
+        let barber_1 = Barber(id: uuid, name: "Matt Andis", avatar: "🧟‍♂️")
         uuid = UUID()
-        let barber_2 = Barber(id: uuid, name: "Sam Bentham")
+        let barber_2 = Barber(id: uuid, name: "Sam Bentham", avatar: "🧛🏼")
         uuid = UUID()
-        let barber_3 = Barber(id: uuid, name: "Warren Flynn")
+        let barber_3 = Barber(id: uuid, name: "Warren Flynn", avatar: "👷🏾")
         uuid = UUID()
-        let barber_4 = Barber(id: uuid, name: "Vic Fontanez")
+        let barber_4 = Barber(id: uuid, name: "Vic Fontanez", avatar: "👨🏻‍⚕️")
         shiftBarbers = [barber_1, barber_2, barber_3, barber_4]
     }
 }
@@ -72,13 +82,13 @@ struct ShiftTwo {
     
     init() {
         var uuid = UUID()
-        let barber_1 = Barber(id: uuid, name: "JC Barber")
+        let barber_1 = Barber(id: uuid, name: "JC Barber", avatar: "👨🏻‍🎤")
         uuid = UUID()
-        let barber_2 = Barber(id: uuid, name: "Matt Conrad")
+        let barber_2 = Barber(id: uuid, name: "Matt Conrad", avatar: "🧑‍🏭")
         uuid = UUID()
-        let barber_3 = Barber(id: uuid, name: "Ramesh Babu")
+        let barber_3 = Barber(id: uuid, name: "Ramesh Babu", avatar: "👨🏻‍🎨")
         uuid = UUID()
-        let barber_4 = Barber(id: uuid, name: "Diego d'Ambrosio")
+        let barber_4 = Barber(id: uuid, name: "Diego d'Ambrosio", avatar: "💁🏽")
         shiftBarbers = [barber_1, barber_2, barber_3, barber_4]
     }
 }
@@ -91,7 +101,9 @@ class BarberShop: ObservableObject {
     var shift_1 = ShiftOne()
     var shift_2 = ShiftTwo()
     
-    @Published var statusMessage = ""
+    var statusMessage = ""
+    
+    var barberShopDelegate: BarberShopDelegate?
     
     // default to 8am
     var currentTime = 530 { // timescale is in "minutes" using a counter that cycles through 0-1339 each day
@@ -141,16 +153,17 @@ class BarberShop: ObservableObject {
             else {
                 self.shift = 2
             }
+            
         }
     }
     
-    @Published var timeSlider = 22.0 {
+    var timeSlider = 22.0 {
         didSet {
             timeScale = Int(22.0-(timeSlider))
         }
     }
 
-    @Published var timeScale = 22 {
+    var timeScale = 22 {
         willSet {
             if newValue < MIN_TIMESCALE || newValue > MAX_TIMESCALE {
                 debugPrint("Rejecting invalid timescale! \(newValue)")
@@ -174,7 +187,7 @@ class BarberShop: ObservableObject {
         }
     }
     
-    @Published var timeBuffer = 2
+    var timeBuffer = 2
     var eventQueue = EventHeap()
     let bgQ = DispatchQueue(label: "default bg", qos: .userInteractive, attributes: .concurrent)
     
@@ -189,7 +202,7 @@ class BarberShop: ObservableObject {
     
     var timer: Timer? = nil
     
-    @Published var isOpen = false {
+    var isOpen = false {
         didSet {
             if isOpen == oldValue {return}
             
@@ -232,7 +245,7 @@ class BarberShop: ObservableObject {
         }
     }
     
-    @Published var shift = -1 {
+    var shift = -1 {
         didSet {
             if shift == oldValue {return}
             if shift == 1 {
@@ -287,6 +300,8 @@ class BarberShop: ObservableObject {
                 }
             }
         }
+        
+        timerEnabled(te: true)
     }
     
     func readTextFileLines(from fileURL: URL) throws {
@@ -612,6 +627,10 @@ class BarberShop: ObservableObject {
                         
                         self.timeBuffer = 0
                         self.currentTime += 1
+                        
+                        if barberShopDelegate != nil {
+                            barberShopDelegate?.didUpdateCurrentTime()
+                        }
 //                        debugPrint("Current time: \(self.currentTime)")
                     } else {
                         self.timeBuffer += 1
