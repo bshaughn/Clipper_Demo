@@ -157,6 +157,14 @@ class BarberShop: ObservableObject {
         }
     }
     
+    var timeUISlider = 0.1 {
+        didSet {
+            timeScale = 22 - Int(22.0*timeUISlider)
+            print("Timescale is now \(timeScale)")
+        }
+    }
+    
+    
     var timeSlider = 22.0 {
         didSet {
             timeScale = Int(22.0-(timeSlider))
