@@ -9,12 +9,18 @@ import Foundation
 
 protocol BarberShopDelegate {
     func didUpdateCurrentTime()
-    func barberDidArrive()
-    func customerDidArrive()
-    func customerFrustrated()
-    func customerSatisfied()
-    func customerCursing()
+    func barberDidArrive(barber:Barber, barberChairNumber: Int)
+    func customerDidArrive(customer:Customer)
+    func customerMovedtoWaitingRoom(customer:Customer, waitingRoomSlot:Int)
+    func customerMovedtoBarberChair(customer:Customer, barberChairNumber:Int)
+//    func customerMovedFromWatingRoomToChair(customer: Customer, waitingRoomSlot:Int, barberChairNumber:Int)
+    func customerFinishedHaircut(customer:Customer)
+    func customerFrustrated(customer:Customer)
+    func customerSatisfied(customer:Customer)
+    func customerCursing(customer:Customer)
+    func customerDeparted(customer:Customer)
     func shopOpenStatus(isOpen:Bool)
+    func updateWaitingRoom(waitingCustomers: [Customer])
 }
 
 let READ_EVENTS_FROM_FILE = false  // Id rather do this with Swift flags; for demo we'll just use a const
@@ -169,16 +175,15 @@ class BarberShop: ObservableObject {
             }
             
             if timeUISlider > 0.4 && timeUISlider <= 0.8 {
-                MIN_TIMEBUFFER = 20
+                MIN_TIMEBUFFER = 15
             }
             
             if timeUISlider > 0.8 {
-                MIN_TIMEBUFFER = 6
+                MIN_TIMEBUFFER = 3
             }
             
         }
     }
-    
     
     var timeSlider = 22.0 {
         didSet {
@@ -277,8 +282,10 @@ class BarberShop: ObservableObject {
             if shift == 1 {
                 // bring in shift 1 barbers
                 for barber in shift_1.shiftBarbers {
-                    let clipperEvent = ClipperEvent(id: UUID(), ts: currentTime, type: .barberStartShift, owner: barber.id)
-                    eventQueue.addEvent(event: clipperEvent)
+//                    let clipperEvent = ClipperEvent(id: UUID(), ts: currentTime, type: .barberStartShift, owner: barber.id)
+//                    eventQueue.addEvent(event: clipperEvent)
+                    barberStartShift(barberID: barber.id)
+                    
                 }
             }
             
@@ -365,6 +372,10 @@ class BarberShop: ObservableObject {
             return
         }
         
+        if barberShopDelegate != nil {
+            barberShopDelegate?.customerDidArrive(customer: newCustomer)
+        }
+        
         let freeChairs = chairs.filter{$0.customer==nil && $0.barber != nil}
         if freeChairs.count > 0 {
             let freeChairIndex = chairs.firstIndex { bc in
@@ -402,11 +413,13 @@ class BarberShop: ObservableObject {
             
             let finishHaircutEvent = ClipperEvent(id: UUID(), ts: haircutFinish, type: .customerFinishedHaircut, owner: newCustomer.id)
             eventQueue.addEvent(event: finishHaircutEvent)
+            barberShopDelegate?.customerMovedtoBarberChair(customer: newCustomer, barberChairNumber: freeChairIndex!)
         }
         else {
             let frustrationEvent = ClipperEvent(id: UUID(), ts: currentTime+20, type: .customerFrustrated, owner: newCustomer.id)
             eventQueue.addEvent(event: frustrationEvent)
                 waitingRoom.append(newCustomer)
+            barberShopDelegate?.customerMovedtoWaitingRoom(customer: newCustomer, waitingRoomSlot: waitingRoom.count)
         }
     }
     
@@ -433,6 +446,10 @@ class BarberShop: ObservableObject {
         
         if customerIndex != nil {
             customers.remove(at: customerIndex!)
+            
+            if barberShopDelegate != nil {
+                barberShopDelegate?.customerDeparted(customer: finishedCustomer)
+            }
         }
         
         if (waitingRoom.first(where: { c in
@@ -472,6 +489,13 @@ class BarberShop: ObservableObject {
                     
                 let finishHaircutEvent = ClipperEvent(id: UUID(), ts: chairs[customerChair[0].id].customer!.haircutFinish, type: .customerFinishedHaircut, owner: seatedCustomer!.id)
                     eventQueue.addEvent(event: finishHaircutEvent)
+                
+                if barberShopDelegate != nil {
+//                    barberShopDelegate?.customerMovedFromWatingRoomToChair(customer: customers[customerIndex!], waitingRoomSlot: 0, barberChairNumber: customerChair[0].id)
+                    barberShopDelegate?.customerMovedtoBarberChair(customer: nextCustomer, barberChairNumber: customerChair[0].id)
+                    
+                    barberShopDelegate?.updateWaitingRoom(waitingCustomers: waitingRoom)
+                }
             }
         }
     }
@@ -480,6 +504,10 @@ class BarberShop: ObservableObject {
         DispatchQueue.main.async { [self] in
 //            debugPrint("PRinting customer satisfied")
                 self.statusMessage = "\(happyCustomer.name) is satisfied!"
+            
+            if barberShopDelegate != nil {
+                barberShopDelegate?.customerSatisfied(customer: happyCustomer)
+            }
                 bgQ.sync(flags: .barrier) { [self] in
                     self.customerDeparted(finishedCustomer: happyCustomer)
                 }
@@ -495,6 +523,11 @@ class BarberShop: ObservableObject {
 //            debugPrint("PRinting customer frustrated")
 
             self.statusMessage = "\(madCustomer.name) is frustrated!"
+            
+            if barberShopDelegate != nil {
+                barberShopDelegate?.customerFrustrated(customer: madCustomer)
+            }
+            
             bgQ.sync(flags: .barrier) { [self] in
                 self.customerDeparted(finishedCustomer: madCustomer)
             }
@@ -512,6 +545,38 @@ class BarberShop: ObservableObject {
             return shift2_barber_list[0]
         }
         return nil
+    }
+    
+    func barberStartShift(barberID:UUID) {
+        guard let barber = findBarber(barberID: barberID) else {
+            statusMessage = "BARBER \(barberID) FAILED TO START SHIFT"
+            return
+        }
+        
+        // look for free chairs first
+        if !barbers.contains(where: { b in
+            b.id == barber.id
+        }) {
+            barbers.append(barber)
+        }
+        
+        let freeChairs = chairs.filter{$0.barber == nil}
+        if freeChairs.count > 0 {
+            let freeChair = freeChairs[0]
+            let freeChairIndex = chairs.firstIndex { chair in
+                chair.id == freeChair.id
+            }
+            
+            chairs[freeChairIndex!].assignBarber(newBarber: barber)
+            
+            if barberShopDelegate != nil {
+                barberShopDelegate?.barberDidArrive(barber: barber, barberChairNumber: freeChairIndex!)
+            }
+            
+        }
+        else {
+            waitingBarbers.append(barber)
+        }
     }
     
     func handleEvent(evt: ClipperEvent) {
@@ -550,30 +615,31 @@ class BarberShop: ObservableObject {
             
             // MARK: barberStartShift case
         case .barberStartShift:
-            guard let barber = findBarber(barberID: evt.owner) else {
-                statusMessage = "BARBER \(evt.owner) FAILED TO START SHIFT"
-                return
-            }
-            
-            // look for free chairs first
-            if !barbers.contains(where: { b in
-                b.id == barber.id
-            }) {
-                barbers.append(barber)
-            }
-            
-            let freeChairs = chairs.filter{$0.barber == nil}
-            if freeChairs.count > 0 {
-                let freeChair = freeChairs[0]
-                let freeChairIndex = chairs.firstIndex { chair in
-                    chair.id == freeChair.id
-                }
-                
-                chairs[freeChairIndex!].assignBarber(newBarber: barber)
-            }
-            else {
-                waitingBarbers.append(barber)
-            }
+            barberStartShift(barberID: evt.owner)
+//            guard let barber = findBarber(barberID: evt.owner) else {
+//                statusMessage = "BARBER \(evt.owner) FAILED TO START SHIFT"
+//                return
+//            }
+//
+//            // look for free chairs first
+//            if !barbers.contains(where: { b in
+//                b.id == barber.id
+//            }) {
+//                barbers.append(barber)
+//            }
+//
+//            let freeChairs = chairs.filter{$0.barber == nil}
+//            if freeChairs.count > 0 {
+//                let freeChair = freeChairs[0]
+//                let freeChairIndex = chairs.firstIndex { chair in
+//                    chair.id == freeChair.id
+//                }
+//
+//                chairs[freeChairIndex!].assignBarber(newBarber: barber)
+//            }
+//            else {
+//                waitingBarbers.append(barber)
+//            }
             
             // MARK: customerArrive case
         case .customerArrive:

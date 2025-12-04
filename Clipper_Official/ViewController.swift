@@ -72,9 +72,21 @@ class ViewController: UIViewController {
     @IBOutlet weak var chair_3_barber: UILabel!
     @IBOutlet weak var chair_4_barber: UILabel!
     
+    @IBOutlet weak var waitingRoom1: UILabel!
+    @IBOutlet weak var waitingRoom2: UILabel!
+    @IBOutlet weak var waitingRoom3: UILabel!
+    @IBOutlet weak var waitingRoom4: UILabel!
+    
+    @IBOutlet weak var arrivalSpot: UILabel!
+    @IBOutlet weak var departureSpot: UILabel!
+    
     @IBOutlet weak var wallClock: WallClock!
     
     @IBOutlet weak var timescaleSlider: UISlider!
+    
+    var customerImageViews = [String: UILabel]()
+    
+    
     
     @IBAction func timescaleSliderMoved(_ sender: Any) {
         let sliderValue = (sender as! UISlider).value
@@ -86,7 +98,7 @@ class ViewController: UIViewController {
     
     let barberShop = BarberShop()
     
-    var viewCustomers = [Customer]()
+//    var viewCustomers = [Customer]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,7 +131,6 @@ class ViewController: UIViewController {
         
         let alphas = [0.0, 0.1, 0.4, 1.0, 0.5, 0.3, 0.05]
         
-        
         if visibleWaves.count < 2 {
             var numWaves = Int.random(in: 1...3)
             
@@ -133,48 +144,139 @@ class ViewController: UIViewController {
         }
         
         for wave in visibleWaves {
-            
             let waveAlpha = Double(round(100 * wave.alpha) / 100)
-            
             let alphaIndex = alphas.firstIndex(of: waveAlpha)
             
             if alphaIndex == alphas.count-1 {
                 visibleWaves.remove(at: visibleWaves.firstIndex(of: wave)!)
             }
             else {
-                
                 wave.alpha = alphas[alphaIndex!+1]
             }
-            
         }
     }
 }
 
 extension ViewController: BarberShopDelegate {
+    
+    func updateWaitingRoom(waitingCustomers: [Customer]) {
+        let waitingRoomSlots = [waitingRoom1, waitingRoom2, waitingRoom3, waitingRoom4]
+        var i = 0
+        
+        while i < waitingCustomers.count {
+            let customerLabel = customerImageViews[waitingCustomers[i].id.uuidString]
+            UIView.transition(with: customerLabel!, duration: 0.2) {
+                customerLabel?.frame = waitingRoomSlots[i]!.frame
+            }
+            
+            i += 1
+        }
+    }
+    
+    func customerMovedFromWatingRoomToChair(customer: Customer, waitingRoomSlot: Int, barberChairNumber: Int) {
+        let waitingRoomSlots = [waitingRoom1, waitingRoom2, waitingRoom3, waitingRoom4]
+        waitingRoomSlots[waitingRoomSlot]?.text = ""
+        
+        let chairs = [chair_1_customer, chair_2_customer, chair_3_customer, chair_4_customer]
+        chairs[barberChairNumber]!.text = normalCustomer
+        
+//        if waitingRoomSlot < waitingRoomSlots.count-1 {
+//            var i = waitingRoomSlot + 1
+//            while i < waitingRoomSlots.count {
+//                waitingRoomSlots[i-1]?.text = waitingRoomSlots[i]?.text
+//                i += 1
+//            }
+//        }
+        
+        let customerLabel = customerImageViews[customer.id.uuidString]
+        
+        UIView.animate(withDuration: 0.1) {
+            customerLabel?.frame.origin =  (waitingRoomSlots[waitingRoomSlot-1]?.frame.origin)!
+        }
+        
+    }
+    
+    func barberDidArrive(barber: Barber, barberChairNumber: Int) {
+        let barberSlots = [chair_1_barber, chair_2_barber, chair_3_barber, chair_4_barber]
+        
+        barberSlots[barberChairNumber]?.text = barber.avatar
+    }
+    
+    func customerDidArrive(customer: Customer) {
+        var customerLabel = UILabel(frame: arrivalSpot.frame)
+        
+        customerImageViews[customer.id.uuidString] = customerLabel
+        customerLabel.font = UIFont.systemFont(ofSize: 38.0)
+        customerLabel.text = normalCustomer
+        self.shopView.addSubview(customerLabel)
+    }
+    
+    func customerMovedtoWaitingRoom(customer: Customer, waitingRoomSlot: Int) {
+        let waitingRoomSlots = [waitingRoom1, waitingRoom2, waitingRoom3, waitingRoom4]
+        
+//        waitingRoomSlots[waitingRoomSlot-1]?.text = normalCustomer
+        let customerLabel = customerImageViews[customer.id.uuidString]
+        customerLabel?.text = normalCustomer
+        
+        UIView.animate(withDuration: 0.1) {
+            customerLabel?.frame.origin =  (waitingRoomSlots[waitingRoomSlot-1]?.frame.origin)!
+        }
+    }
+    
+    func customerMovedtoBarberChair(customer: Customer, barberChairNumber: Int) {
+        let chairs = [chair_1_customer, chair_2_customer, chair_3_customer, chair_4_customer]
+        
+//        chairs[barberChairNumber]!.text = normalCustomer
+        let customerLabel = customerImageViews[customer.id.uuidString]
+        customerLabel?.text = normalCustomer
+        
+        UIView.animate(withDuration: 1.1 - Double(timescaleSlider.value)) {
+            customerLabel?.frame = chairs[barberChairNumber]!.frame
+        }
+    }
+    
+    func customerFinishedHaircut(customer: Customer) {
+        //
+    }
+    
+    func customerFrustrated(customer: Customer) {
+        let customerLabel = customerImageViews[customer.id.uuidString]
+        customerLabel?.text = frustratedCustomer
+    }
+    
+    func customerSatisfied(customer: Customer) {
+        let customerLabel = customerImageViews[customer.id.uuidString]
+        customerLabel?.text = satisfiedCustomer
+    }
+    
+    func customerCursing(customer: Customer) {
+        let customerLabel = customerImageViews[customer.id.uuidString]
+        customerLabel?.text = cursingCustomer
+    }
+    
+    func customerDeparted(customer: Customer) {
+        let customerLabel = customerImageViews[customer.id.uuidString]
+//        customerLabel?.text = cursingCustomer
+        
+        if customerLabel == nil {
+            return
+        }
+        
+        UIView.animate(withDuration: 1.1 - Double(timescaleSlider.value)) { [self] in
+            customerLabel?.frame = departureSpot.frame
+        } completion: { dun in
+            UIView.transition(with: customerLabel!, duration: 0.3) { [self] in
+                customerLabel?.alpha = 0
+                customerImageViews.removeValue(forKey: customer.id.uuidString)
+                
+            }
+        }
+    }
+    
     func didUpdateCurrentTime() {
         wallClock.incrementTime()
         
         moveWaves()
-    }
-    
-    func barberDidArrive() {
-        //
-    }
-    
-    func customerDidArrive() {
-        //
-    }
-    
-    func customerFrustrated() {
-        //
-    }
-    
-    func customerSatisfied() {
-        //
-    }
-    
-    func customerCursing() {
-        //
     }
     
     func shopOpenStatus(isOpen: Bool) {
@@ -187,7 +289,5 @@ extension ViewController: BarberShopDelegate {
             leftDoor.image = UIImage(named: "Door_Clsoed")
         }
     }
-    
-    
 }
 
