@@ -72,6 +72,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var chair_3_barber: UILabel!
     @IBOutlet weak var chair_4_barber: UILabel!
     
+    @IBOutlet weak var scissor_1: UILabel!
+    @IBOutlet weak var scissor_2: UILabel!
+    @IBOutlet weak var scissor_3: UILabel!
+    @IBOutlet weak var scissor_4: UILabel!
+    
     @IBOutlet weak var waitingRoom1: UILabel!
     @IBOutlet weak var waitingRoom2: UILabel!
     @IBOutlet weak var waitingRoom3: UILabel!
@@ -85,8 +90,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var timescaleSlider: UISlider!
     
     var customerImageViews = [String: UILabel]()
-    
-    
+    var barberLabels = [String: UILabel]()
     
     @IBAction func timescaleSliderMoved(_ sender: Any) {
         let sliderValue = (sender as! UISlider).value
@@ -155,12 +159,51 @@ class ViewController: UIViewController {
             }
         }
     }
+    
+    func moveScissors() {
+        let scissors = [scissor_1, scissor_2, scissor_3, scissor_4]
+        
+        for scissor in scissors {
+//            UIView.transition(with: scissor!, duration: 1.1-Double(timescaleSlider.value)) { [self] in
+//                scissor?.transform = CGAffineTransform(rotationAngle: CGFloat.pi/4 + CGFloat(timescaleSlider.value/10))
+//            } completion: { [self] _ in
+//                UIView.transition(with: scissor!, duration: 1.1-Double(timescaleSlider.value)) { [self] in
+//                    scissor?.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/4 - CGFloat(timescaleSlider.value/10))
+//                }
+//            }
+            
+            let currentTime = wallClock.clockTime
+            if currentTime%2 == 0 {
+                scissor?.transform = CGAffineTransform(rotationAngle: CGFloat.pi/5)
+            }
+            else {
+                scissor?.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/5)
+            }
+        }
+    }
 }
 
 extension ViewController: BarberShopDelegate {
+
+    
+    func barberWentHome(barber: Barber, chairIndex: Int) {
+        
+        let barberList = [chair_1_barber, chair_2_barber, chair_3_barber, chair_4_barber]
+        
+        let departingBarberLabel = barberLabels[barber.id.uuidString]
+        
+        UIView.transition(with: departingBarberLabel!, duration: 0.2) { [self] in
+            departingBarberLabel!.frame = departureSpot.frame
+        } completion: { _ in
+            departingBarberLabel!.removeFromSuperview()
+        }
+    }
+    
     
     func updateWaitingRoom(waitingCustomers: [Customer]) {
         let waitingRoomSlots = [waitingRoom1, waitingRoom2, waitingRoom3, waitingRoom4]
+        
+        
         var i = 0
         
         while i < waitingCustomers.count {
@@ -199,7 +242,25 @@ extension ViewController: BarberShopDelegate {
     func barberDidArrive(barber: Barber, barberChairNumber: Int) {
         let barberSlots = [chair_1_barber, chair_2_barber, chair_3_barber, chair_4_barber]
         
-        barberSlots[barberChairNumber]?.text = barber.avatar
+        let barberLabel = UILabel(frame: departureSpot.frame)
+        barberLabel.font = UIFont.systemFont(ofSize: 38.0)
+        barberLabel.text = barber.avatar
+        
+        barberLabels[barber.id.uuidString] = barberLabel
+        
+        self.shopView.addSubview(barberLabel)
+//        barberSlots[barberChairNumber]?.text = barber.avatar
+        
+        UIView.transition(with: barberLabel, duration: 0.2) {
+            barberLabel.frame = barberSlots[barberChairNumber]!.frame
+        } completion: { _ in
+            UIView.animate(withDuration: 0.15) {
+                barberLabel.backgroundColor = .green
+            } completion: { _ in
+                barberLabel.backgroundColor = .clear
+            }
+        }
+        
     }
     
     func customerDidArrive(customer: Customer) {
@@ -226,17 +287,23 @@ extension ViewController: BarberShopDelegate {
     func customerMovedtoBarberChair(customer: Customer, barberChairNumber: Int) {
         let chairs = [chair_1_customer, chair_2_customer, chair_3_customer, chair_4_customer]
         
+        let scissors = [scissor_1, scissor_2, scissor_3, scissor_4]
+        
 //        chairs[barberChairNumber]!.text = normalCustomer
         let customerLabel = customerImageViews[customer.id.uuidString]
         customerLabel?.text = normalCustomer
         
         UIView.animate(withDuration: 1.1 - Double(timescaleSlider.value)) {
             customerLabel?.frame = chairs[barberChairNumber]!.frame
+        } completion: { _ in
+            scissors[barberChairNumber]?.isHidden = false
         }
     }
     
-    func customerFinishedHaircut(customer: Customer) {
-        //
+    func customerFinishedHaircut(customer: Customer, barberChairNumber: Int) {
+        let scissors = [scissor_1, scissor_2, scissor_3, scissor_4]
+        
+        scissors[barberChairNumber]?.isHidden = true
     }
     
     func customerFrustrated(customer: Customer) {
@@ -277,6 +344,7 @@ extension ViewController: BarberShopDelegate {
         wallClock.incrementTime()
         
         moveWaves()
+        moveScissors()
     }
     
     func shopOpenStatus(isOpen: Bool) {

@@ -10,11 +10,12 @@ import Foundation
 protocol BarberShopDelegate {
     func didUpdateCurrentTime()
     func barberDidArrive(barber:Barber, barberChairNumber: Int)
+    func barberWentHome(barber: Barber, chairIndex: Int)
     func customerDidArrive(customer:Customer)
     func customerMovedtoWaitingRoom(customer:Customer, waitingRoomSlot:Int)
     func customerMovedtoBarberChair(customer:Customer, barberChairNumber:Int)
 //    func customerMovedFromWatingRoomToChair(customer: Customer, waitingRoomSlot:Int, barberChairNumber:Int)
-    func customerFinishedHaircut(customer:Customer)
+    func customerFinishedHaircut(customer:Customer, barberChairNumber: Int)
     func customerFrustrated(customer:Customer)
     func customerSatisfied(customer:Customer)
     func customerCursing(customer:Customer)
@@ -254,7 +255,15 @@ class BarberShop: ObservableObject {
                         let endShiftEvent = ClipperEvent(id: UUID(), ts: timeToExit, type: .barberGoHome, owner: barber.id)
                         eventQueue.addEvent(event: endShiftEvent)
                         
+                        for wc in waitingRoom {
+                            if barberShopDelegate != nil {
+                                barberShopDelegate?.customerCursing(customer: wc)
+                                barberShopDelegate?.customerDeparted(customer: wc)
+                            }
+                        }
+                        
                         waitingRoom.removeAll()
+                        
                         let waitingCustomers = customers.filter{$0.haircutFinish < 0}
                         
                         for wc in waitingCustomers {
@@ -320,7 +329,7 @@ class BarberShop: ObservableObject {
         
         if READ_EVENTS_FROM_FILE {
             bgQ.sync(flags: .barrier) {
-                if let path = Bundle.main.path(forResource: "testfile2", ofType: "txt") {
+                if let path = Bundle.main.path(forResource: "testfile", ofType: "txt") {
                     let fileURL = URL(fileURLWithPath: path)
                         do {
                             try readTextFileLines(from: fileURL)
@@ -429,6 +438,10 @@ class BarberShop: ObservableObject {
                 c.id == finishedCustomer.id
             }
             
+            if barberShopDelegate != nil {
+                barberShopDelegate?.customerDeparted(customer: finishedCustomer)
+            }
+            
             if customerIndex != nil {
                 customers.remove(at: customerIndex!)
             }
@@ -534,6 +547,26 @@ class BarberShop: ObservableObject {
         }
     }
     
+    func customerLeavesCursing(cursingCustomer: Customer) {
+        DispatchQueue.main.async { [self] in
+//            if cursingCustomer.haircutFinish >= currentTime {
+//                debugPrint("Received frustration event but customer is content")
+//                return
+//            }
+//            debugPrint("PRinting customer frustrated")
+
+            self.statusMessage = "\(cursingCustomer.name) leaves cursing!"
+            
+            if barberShopDelegate != nil {
+                barberShopDelegate?.customerCursing(customer: cursingCustomer)
+            }
+            
+            bgQ.sync(flags: .barrier) { [self] in
+                self.customerDeparted(finishedCustomer: cursingCustomer)
+            }
+        }
+    }
+    
     func findBarber(barberID: UUID) -> Barber? {
         let shift1_barber_list = shift_1.shiftBarbers.filter({$0.id == barberID})
         if shift1_barber_list.count > 0 {
@@ -604,13 +637,24 @@ class BarberShop: ObservableObject {
                 if waitingBarbers.count > 0 {
                     let nextBarber = waitingBarbers.remove(at: 0)
                     chairs[barberChairIdx!].assignBarber(newBarber: nextBarber)
+                    
+                    if barberShopDelegate != nil {
+                        barberShopDelegate?.barberDidArrive(barber: nextBarber, barberChairNumber: barberChairIdx!)
+                    }
 
                 }
                 
                 let barberInt = barbers.firstIndex { b in
                     b.id == barber.id
                 }
+                
+                if barberShopDelegate != nil {
+                    barberShopDelegate?.barberWentHome(barber: barbers[barberInt!], chairIndex: barberChairIdx!)
+                }
+                
                 barbers.remove(at: barberInt!)
+                
+
             }
             
             // MARK: barberStartShift case
@@ -664,14 +708,25 @@ class BarberShop: ObservableObject {
             
             // MARK: customerFinishedHaircut case
         case .customerFinishedHaircut:
-            // in case the customer has left the chair they may still be in the customer list
+
             let customerChairs: [BarberChair] = chairs.filter{$0.customer?.id == evt.owner}
         
             if customerChairs.count == 0 {  // not even sure how this is possible. improve later
                 return
             }
+            
+
         
         let customer = customerChairs[0].customer!
+            
+            if barberShopDelegate != nil {
+                
+                barberShopDelegate?.customerFinishedHaircut(customer: customer, barberChairNumber: chairs.firstIndex(where: { bc in
+                    bc.id == customerChairs[0].id
+                })!)
+                
+            }
+            
             let satisfactionOdds = Float.random(in: 0.0...1.0)
             if satisfactionOdds <= 0.3 {
                 customerFrustrated(madCustomer: customer)
