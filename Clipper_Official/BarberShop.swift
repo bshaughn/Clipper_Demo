@@ -470,8 +470,6 @@ class BarberShop: ObservableObject {
                 barberShopDelegate?.customerDeparted(customer: finishedCustomer)
             }
             
-            
-            
             if customerIndex != nil {
                 departedCustomers.append(customers[customerIndex!])
                 customers.remove(at: customerIndex!)
@@ -481,7 +479,7 @@ class BarberShop: ObservableObject {
         let customerChair = chairs.filter{$0.customer?.id == finishedCustomer.id}
 
         if customerChair.count != 0 {
-                chairs[customerChair[0].id].releaseCustomer()
+            chairs[customerChair[0].id].releaseCustomer()
         }
         
         let customerIndex = customers.firstIndex { c in
@@ -493,6 +491,7 @@ class BarberShop: ObservableObject {
             
             if barberShopDelegate != nil {
                 barberShopDelegate?.customerDeparted(customer: finishedCustomer)
+//                barberShopDelegate?.updateWaitingRoom(waitingCustomers: waitingRoom)
                 departedCustomers.append(finishedCustomer)
             }
         }
@@ -548,23 +547,31 @@ class BarberShop: ObservableObject {
     }
     
     func customerSatisfied(happyCustomer: Customer) {
+        if barberShopDelegate != nil {
+            barberShopDelegate?.customerSatisfied(customer: happyCustomer)
+        }
+        
+//        bgQ.sync(flags: .barrier) { [self] in
+            self.customerDeparted(finishedCustomer: happyCustomer)
+            self.satisfiedCustomers.append(happyCustomer)
+//        }
         DispatchQueue.main.async { [self] in
 //            debugPrint("PRinting customer satisfied")
                 self.statusMessage = "\(happyCustomer.name) is satisfied!"
             
-            if barberShopDelegate != nil {
-                barberShopDelegate?.customerSatisfied(customer: happyCustomer)
-            }
-            
-            bgQ.sync(flags: .barrier) { [self] in
-                self.customerDeparted(finishedCustomer: happyCustomer)
-                self.satisfiedCustomers.append(happyCustomer)
-            }
+//            if barberShopDelegate != nil {
+//                barberShopDelegate?.customerSatisfied(customer: happyCustomer)
+//            }
+//
+//            bgQ.sync(flags: .barrier) { [self] in
+//                self.customerDeparted(finishedCustomer: happyCustomer)
+//                self.satisfiedCustomers.append(happyCustomer)
+//            }
         }
     }
     
     func customerFrustrated(madCustomer:Customer) {
-        if madCustomer.haircutFinish >= currentTime {
+        if madCustomer.haircutFinish > currentTime {
             debugPrint("Received frustration event but customer is content")
             return
         }
@@ -601,17 +608,24 @@ class BarberShop: ObservableObject {
     }
     
     func customerLeavesCursing(cursingCustomer: Customer) {
+        if barberShopDelegate != nil {
+            barberShopDelegate?.customerCursing(customer: cursingCustomer)
+        }
+        
+//        bgQ.sync(flags: .barrier) { [self] in
+            self.customerDeparted(finishedCustomer: cursingCustomer)
+//        }
         DispatchQueue.main.async { [self] in
 
             self.statusMessage = "\(cursingCustomer.name) leaves cursing!"
             
-            if barberShopDelegate != nil {
-                barberShopDelegate?.customerCursing(customer: cursingCustomer)
-            }
-            
-            bgQ.sync(flags: .barrier) { [self] in
-                self.customerDeparted(finishedCustomer: cursingCustomer)
-            }
+//            if barberShopDelegate != nil {
+//                barberShopDelegate?.customerCursing(customer: cursingCustomer)
+//            }
+//
+//            bgQ.sync(flags: .barrier) { [self] in
+//                self.customerDeparted(finishedCustomer: cursingCustomer)
+//            }
         }
     }
     

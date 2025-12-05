@@ -102,6 +102,8 @@ class ViewController: UIViewController {
     
     let barberShop = BarberShop()
     
+    var allowableDrift = [CGPoint]()
+    
 //    var viewCustomers = [Customer]()
     
     override func viewDidLoad() {
@@ -128,6 +130,13 @@ class ViewController: UIViewController {
         waves_7.alpha = 0
         waves_8.alpha = 0
         waves_9.alpha = 0
+        
+        let shopFrame = shopView.frame
+    
+        allowableDrift.append(CGPoint(x: shopFrame.origin.x+5, y: shopFrame.origin.y))
+        allowableDrift.append(CGPoint(x: shopFrame.origin.x-5, y: shopFrame.origin.y))
+        allowableDrift.append(CGPoint(x: shopFrame.origin.x, y: shopFrame.origin.y+5))
+        allowableDrift.append(CGPoint(x: shopFrame.origin.x, y: shopFrame.origin.y-5))
     }
 
     func moveWaves() {
@@ -164,14 +173,6 @@ class ViewController: UIViewController {
         let scissors = [scissor_1, scissor_2, scissor_3, scissor_4]
         
         for scissor in scissors {
-//            UIView.transition(with: scissor!, duration: 1.1-Double(timescaleSlider.value)) { [self] in
-//                scissor?.transform = CGAffineTransform(rotationAngle: CGFloat.pi/4 + CGFloat(timescaleSlider.value/10))
-//            } completion: { [self] _ in
-//                UIView.transition(with: scissor!, duration: 1.1-Double(timescaleSlider.value)) { [self] in
-//                    scissor?.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/4 - CGFloat(timescaleSlider.value/10))
-//                }
-//            }
-            
             let currentTime = wallClock.clockTime
             if currentTime%2 == 0 {
                 scissor?.transform = CGAffineTransform(rotationAngle: CGFloat.pi/5)
@@ -179,6 +180,39 @@ class ViewController: UIViewController {
             else {
                 scissor?.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/5)
             }
+        }
+    }
+    
+    func moveShop() {
+        
+        let moveOdds = Float.random(in: 0.0...1.0)
+        
+        if moveOdds < 0.6 {return}
+        
+        let direction = Int.random(in: 0...3)
+        
+        switch direction {
+        case 0:
+            if shopView.frame.origin.x + 1 <= allowableDrift[0].x {
+                shopView.frame.origin.x += 1
+            }
+            
+        case 1:
+            if shopView.frame.origin.x - 1 >= allowableDrift[1].x {
+                shopView.frame.origin.x -= 1
+            }
+        case 2:
+            if shopView.frame.origin.y + 1 <= allowableDrift[2].y {
+                shopView.frame.origin.y += 1
+            }
+            
+        case 3:
+            if shopView.frame.origin.y - 1 >= allowableDrift[3].y {
+                shopView.frame.origin.y -= 1
+            }
+            
+        default:
+            debugPrint("????")
         }
     }
 }
@@ -335,6 +369,7 @@ extension ViewController: BarberShopDelegate {
             UIView.transition(with: customerLabel!, duration: 0.3) { [self] in
                 customerLabel?.alpha = 0
                 customerImageViews.removeValue(forKey: customer.id.uuidString)
+                updateWaitingRoom(waitingCustomers: barberShop.waitingRoom)
                 
             }
         }
@@ -345,6 +380,7 @@ extension ViewController: BarberShopDelegate {
         
         moveWaves()
         moveScissors()
+//        moveShop()  this works, but I'll comment it out in case the user doesnt like the shop drifting
     }
     
     func shopOpenStatus(isOpen: Bool) {
@@ -354,7 +390,7 @@ extension ViewController: BarberShopDelegate {
         }
         else {
             rightDoor.image = UIImage(named: "Door_Closed")
-            leftDoor.image = UIImage(named: "Door_Clsoed")
+            leftDoor.image = UIImage(named: "Door_Closed")
         }
     }
 }
