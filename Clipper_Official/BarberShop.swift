@@ -221,7 +221,8 @@ class BarberShop: ObservableObject {
     
     var timeBuffer = 2
     var eventQueue = EventHeap()
-    let bgQ = DispatchQueue(label: "default bg", qos: .userInteractive, attributes: .concurrent)
+//    let bgQ = DispatchQueue(label: "default bg", qos: .background , attributes: .concurrent)
+    let bgQ = DispatchQueue.global(qos: .background)
     
     var barbers = [Barber]()
     var chairs = [BarberChair(id: 0), BarberChair(id:1), BarberChair(id:2), BarberChair(id:3)]
