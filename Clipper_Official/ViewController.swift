@@ -175,10 +175,10 @@ class ViewController: UIViewController {
         for scissor in scissors {
             let currentTime = wallClock.clockTime
             if currentTime%2 == 0 {
-                scissor?.transform = CGAffineTransform(rotationAngle: CGFloat.pi/5)
+                scissor?.transform = CGAffineTransform(rotationAngle: CGFloat.pi/6)
             }
             else {
-                scissor?.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/5)
+                scissor?.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/6)
             }
         }
     }
@@ -277,8 +277,19 @@ extension ViewController: BarberShopDelegate {
         let barberSlots = [chair_1_barber, chair_2_barber, chair_3_barber, chair_4_barber]
         
         let barberLabel = UILabel(frame: departureSpot.frame)
+        barberLabel.clipsToBounds = true
+        barberLabel.layer.cornerRadius = 25.0
+        barberLabel.textAlignment = .center
         barberLabel.font = UIFont.systemFont(ofSize: 38.0)
         barberLabel.text = barber.avatar
+        
+        if wallClock.clockTime < 780 {
+            barberLabel.backgroundColor = .lightGray
+        }
+        else {
+            barberLabel.backgroundColor = .darkGray
+        }
+    
         
         barberLabels[barber.id.uuidString] = barberLabel
         
@@ -287,13 +298,13 @@ extension ViewController: BarberShopDelegate {
         
         UIView.transition(with: barberLabel, duration: 0.2) {
             barberLabel.frame = barberSlots[barberChairNumber]!.frame
-        } completion: { _ in
-            UIView.animate(withDuration: 0.15) {
-                barberLabel.backgroundColor = .green
-            } completion: { _ in
-                barberLabel.backgroundColor = .clear
-            }
-        }
+        } //completion: { _ in
+//            UIView.animate(withDuration: 0.15) {
+//                barberLabel.backgroundColor = .green
+//            } completion: { _ in
+//                barberLabel.backgroundColor = .clear
+//            }
+//        }
         
     }
     
@@ -302,6 +313,7 @@ extension ViewController: BarberShopDelegate {
         
         customerImageViews[customer.id.uuidString] = customerLabel
         customerLabel.font = UIFont.systemFont(ofSize: 38.0)
+        customerLabel.textAlignment = .center
         customerLabel.text = normalCustomer
         self.shopView.addSubview(customerLabel)
     }
@@ -342,16 +354,25 @@ extension ViewController: BarberShopDelegate {
     
     func customerFrustrated(customer: Customer) {
         let customerLabel = customerImageViews[customer.id.uuidString]
+        customerLabel?.clipsToBounds = true
+        customerLabel?.layer.cornerRadius = 25.0
+        customerLabel?.backgroundColor = .red
         customerLabel?.text = frustratedCustomer
     }
     
     func customerSatisfied(customer: Customer) {
         let customerLabel = customerImageViews[customer.id.uuidString]
+        customerLabel?.clipsToBounds = true
+        customerLabel?.layer.cornerRadius = 25.0
+        customerLabel?.backgroundColor = .green
         customerLabel?.text = satisfiedCustomer
     }
     
     func customerCursing(customer: Customer) {
         let customerLabel = customerImageViews[customer.id.uuidString]
+        customerLabel?.clipsToBounds = true
+        customerLabel?.layer.cornerRadius = 25.0
+        customerLabel?.backgroundColor = .black
         customerLabel?.text = cursingCustomer
     }
     
