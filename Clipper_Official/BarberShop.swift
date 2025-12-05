@@ -131,7 +131,7 @@ class BarberShop: ObservableObject {
                             
                             customers.append(newCustomer)
                             
-                            debugCustomers.append(newCustomer)
+//                            debugCustomers.append(newCustomer)
                             
                             let firstCustomerEvent = ClipperEvent(id: UUID(), ts: currentTime + 5, type: .customerArrive, owner: newCustomer.id)
                             eventQueue.addEvent(event: firstCustomerEvent)
@@ -149,7 +149,7 @@ class BarberShop: ObservableObject {
                         let newCustomer = Customer(id: UUID(), name: "Customer-\(currentTime)", arrivalTime: currentTime + 5, frustrateTime: currentTime+25, haircutDuration: -1, haircutFinish: -1)
                         
                         customers.append(newCustomer)
-                        debugCustomers.append(newCustomer)
+//                        debugCustomers.append(newCustomer)
                         
                         let newCustomerEvent = ClipperEvent(id: UUID(), ts: currentTime + 5, type: .customerArrive, owner: newCustomer.id)
                         eventQueue.addEvent(event: newCustomerEvent)
@@ -229,10 +229,10 @@ class BarberShop: ObservableObject {
     var waitingBarbers = [Barber]()
     var customers = [Customer]()
     
-    var debugCustomers = [Customer]()
-    var departedCustomers = [Customer]()
-    var satisfiedCustomers = [Customer]()
-    var frustratedCustomers = [Customer]()
+//    var debugCustomers = [Customer]()
+//    var departedCustomers = [Customer]()
+//    var satisfiedCustomers = [Customer]()
+//    var frustratedCustomers = [Customer]()
     
     var occupancy = 0 //max occupancy is 8
     var waitingRoom = [Customer]() //array of size 4; LIFO queue
@@ -354,22 +354,22 @@ class BarberShop: ObservableObject {
         timerEnabled(te: true)
     }
     
-    func updateDebugCustomers() {
-        for c in customers {
-            let dbc = debugCustomers.filter{$0.id == c.id}
-            if dbc.count == 0 {
-                debugPrint("Didnt find active customer record??")
-            } else {
-                let dbcIndex = debugCustomers.firstIndex { debugC in
-                    debugC.id == dbc[0].id
-                }
-                
-                if dbcIndex != nil {
-                    debugCustomers[dbcIndex!] = c
-                }
-            }
-        }
-    }
+//    func updateDebugCustomers() {
+//        for c in customers {
+//            let dbc = debugCustomers.filter{$0.id == c.id}
+//            if dbc.count == 0 {
+//                debugPrint("Didnt find active customer record??")
+//            } else {
+//                let dbcIndex = debugCustomers.firstIndex { debugC in
+//                    debugC.id == dbc[0].id
+//                }
+//
+//                if dbcIndex != nil {
+//                    debugCustomers[dbcIndex!] = c
+//                }
+//            }
+//        }
+//    }
     
     func readTextFileLines(from fileURL: URL) throws {
         do {
@@ -382,7 +382,7 @@ class BarberShop: ObservableObject {
                 if line_info.count == 3 {  // textfile lines consist of CustomerName, ArrivalTime, Haircut duration. Anything that doesnt fit this format is not valid
                     let newCustomer = Customer(id: UUID(), name: String(line_info[0]), arrivalTime: Int(line_info[1].trimmingCharacters(in: .whitespacesAndNewlines))!, frustrateTime: -1, haircutDuration: Int(line_info[2].trimmingCharacters(in: .whitespacesAndNewlines))!, haircutFinish: -1)
                     customers.append(newCustomer)
-                    debugCustomers.append(newCustomer)
+//                    debugCustomers.append(newCustomer)
                     let newCustomerArrival = ClipperEvent(id: UUID(), ts: Int(line_info[1].trimmingCharacters(in: .whitespacesAndNewlines))!, type: .customerArrive, owner: newCustomer.id)
                     eventQueue.addEvent(event: newCustomerArrival)
                 }
@@ -471,7 +471,7 @@ class BarberShop: ObservableObject {
             }
             
             if customerIndex != nil {
-                departedCustomers.append(customers[customerIndex!])
+//                departedCustomers.append(customers[customerIndex!])
                 customers.remove(at: customerIndex!)
             }
         }
@@ -492,7 +492,7 @@ class BarberShop: ObservableObject {
             if barberShopDelegate != nil {
                 barberShopDelegate?.customerDeparted(customer: finishedCustomer)
 //                barberShopDelegate?.updateWaitingRoom(waitingCustomers: waitingRoom)
-                departedCustomers.append(finishedCustomer)
+//                departedCustomers.append(finishedCustomer)
             }
         }
         
@@ -531,7 +531,7 @@ class BarberShop: ObservableObject {
                     customers[customerIndex!] = chairs[customerChair[0].id].customer!
                 }
                 
-                updateDebugCustomers()
+//                updateDebugCustomers()
                     
                 let finishHaircutEvent = ClipperEvent(id: UUID(), ts: chairs[customerChair[0].id].customer!.haircutFinish, type: .customerFinishedHaircut, owner: seatedCustomer!.id)
                 eventQueue.addEvent(event: finishHaircutEvent)
@@ -553,7 +553,7 @@ class BarberShop: ObservableObject {
         
 //        bgQ.sync(flags: .barrier) { [self] in
             self.customerDeparted(finishedCustomer: happyCustomer)
-            self.satisfiedCustomers.append(happyCustomer)
+//            self.satisfiedCustomers.append(happyCustomer)
 //        }
         DispatchQueue.main.async { [self] in
 //            debugPrint("PRinting customer satisfied")
@@ -580,7 +580,7 @@ class BarberShop: ObservableObject {
             barberShopDelegate?.customerFrustrated(customer: madCustomer)
         }
         
-        frustratedCustomers.append(madCustomer)
+//        frustratedCustomers.append(madCustomer)
         
 //        bgQ.sync(flags: .barrier) { [self] in
             self.customerDeparted(finishedCustomer: madCustomer)
