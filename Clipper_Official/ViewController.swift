@@ -365,12 +365,16 @@ extension ViewController: BarberShopDelegate {
         
         UIView.animate(withDuration: 1.1 - Double(timescaleSlider.value)) { [self] in
             customerLabel?.frame = departureSpot.frame
-        } completion: { dun in
-            UIView.transition(with: customerLabel!, duration: 0.3) { [self] in
+        } completion: { _ in
+            UIView.transition(with: customerLabel!, duration: 0.3) {
                 customerLabel?.alpha = 0
-                customerImageViews.removeValue(forKey: customer.id.uuidString)
-                updateWaitingRoom(waitingCustomers: barberShop.waitingRoom)
+
                 
+            } completion: { _ in
+                customerLabel?.removeFromSuperview()
+                self.customerImageViews.removeValue(forKey: customer.id.uuidString)
+                // look here
+                self.updateWaitingRoom(waitingCustomers: self.barberShop.waitingRoom)
             }
         }
     }

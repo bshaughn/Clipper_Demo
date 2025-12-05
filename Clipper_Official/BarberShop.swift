@@ -281,6 +281,7 @@ class BarberShop: ObservableObject {
                             
                             if c_idx != nil {
                                 customers.remove(at: c_idx!)
+                                debugPrint("customers count after removal (closed): \(customers.count)")
                             }
                         }
                     }
@@ -473,6 +474,7 @@ class BarberShop: ObservableObject {
             if customerIndex != nil {
 //                departedCustomers.append(customers[customerIndex!])
                 customers.remove(at: customerIndex!)
+                debugPrint("customers count after removal (departed-closed): \(customers.count)")
             }
         }
         
@@ -488,6 +490,8 @@ class BarberShop: ObservableObject {
         
         if customerIndex != nil {
             customers.remove(at: customerIndex!)
+            debugPrint("customers count after removal (departed): \(customers.count)")
+            
             
             if barberShopDelegate != nil {
                 barberShopDelegate?.customerDeparted(customer: finishedCustomer)
