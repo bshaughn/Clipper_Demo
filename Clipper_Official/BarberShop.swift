@@ -872,13 +872,17 @@ class BarberShop: ObservableObject {
 
             }
             
-            let satisfactionOdds = Float.random(in: 0.0...1.0)
-            if satisfactionOdds <= 0.3 {
-                customerFrustrated(madCustomer: customer)
-            }
-            else {
-                customerSatisfied(happyCustomer: customer)
-            }
+            
+            // originally I thought the customers could be disappointed with their haircut
+//            let satisfactionOdds = Float.random(in: 0.0...1.0)
+//            if satisfactionOdds <= 0.3 {
+//                customerDisappointed(disappointedCustomer: customer)
+//            }
+//            else {
+//                customerSatisfied(happyCustomer: customer)
+//            }
+            
+            customerSatisfied(happyCustomer: customer)
             
         default:
             debugPrint("DEQUEUED AN UNRECOGNIZED EVENT!! \(evtType)")
