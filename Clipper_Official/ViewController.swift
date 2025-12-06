@@ -74,8 +74,11 @@ class ViewController: UIViewController {
     let frustratedCustomer = "😤"
     let satisfiedCustomer = "🤩"
     let disappointedCustomer = "😫"
+    let unfulfilledCustomer = "😞"
     
     @IBOutlet weak var shopView: UIView!
+    
+    @IBOutlet weak var clipperPoster: UIImageView!
     
     @IBOutlet weak var timeScaleSlider: UISlider!
     
@@ -165,8 +168,12 @@ class ViewController: UIViewController {
         messagesTableView.dataSource = self
         messagesTableView.register(UINib(nibName: "MessageCell", bundle: nil), forCellReuseIdentifier: "messageCell")
         messagesTableView.separatorStyle = .none
+        messagesTableView.rowHeight = UITableView.automaticDimension
         
         timescaleSlider.value = Float(barberShop.timeUISlider)
+        
+        clipperPoster.layer.borderColor = UIColor.brown.cgColor
+        clipperPoster.layer.borderWidth = 5
         
         waves_1.alpha = 0
         waves_2.alpha = 0
@@ -273,20 +280,22 @@ class ViewController: UIViewController {
     }
     
     func updateMessageTable() {
-        var i = messageList.count - 1
+        var i = messageAlphas.count - 1
+        
         
         while i >= 0 {
             var tableRow = messagesTableView.cellForRow(at: IndexPath(row: i, section: 0))
             messageAlphas[i] -= 0.1
             if messageAlphas[i] <= 0 {
                 messageList.remove(at: i)
+                messageAlphas.remove(at: i)
             }
             i -= 1
         }
         
-//        DispatchQueue.main.async { [self] in
-//            messagesTableView.reloadData()
-//        }
+        DispatchQueue.main.async { [self] in
+            messagesTableView.reloadData()
+        }
     }
     
     
@@ -469,15 +478,20 @@ extension ViewController: BarberShopDelegate {
         let customerLabel = customerImageViews[customer.id.uuidString]
         customerLabel?.text = normalCustomer
         
+        
+        
         UIView.animate(withDuration: 1.1 - Double(timescaleSlider.value)) {
             customerLabel?.frame = chairs[barberChairNumber]!.frame
-        } completion: { _ in
+        } completion: { [self] _ in
             scissors[barberChairNumber]?.isHidden = false
+            self.sendMessage(message: "\(self.barberShop.chairs[barberChairNumber].barber!.name) started cutting \(barberShop.chairs[barberChairNumber].customer!.name)'s hair")
         }
     }
     
     func customerFinishedHaircut(customer: Customer, barberChairNumber: Int) {
         let scissors = [scissor_1, scissor_2, scissor_3, scissor_4]
+        
+        sendMessage(message: "\(String(describing: barberShop.chairs[barberChairNumber].barber!.name)) finished cutting \(String(describing: barberShop.chairs[barberChairNumber].customer!.name))'s hair")
         
         scissors[barberChairNumber]?.isHidden = true
     }
@@ -504,6 +518,22 @@ extension ViewController: BarberShopDelegate {
         customerLabel?.layer.cornerRadius = 25.0
         customerLabel?.backgroundColor = .black
         customerLabel?.text = cursingCustomer
+    }
+    
+    func customerUnfulfilled(customer: Customer) {
+        let customerLabel = customerImageViews[customer.id.uuidString]
+        customerLabel?.clipsToBounds = true
+        customerLabel?.layer.cornerRadius = 25.0
+        customerLabel?.backgroundColor = .yellow
+        customerLabel?.text = unfulfilledCustomer
+    }
+    
+    func customerDisappointed(customer: Customer) {
+        let customerLabel = customerImageViews[customer.id.uuidString]
+        customerLabel?.clipsToBounds = true
+        customerLabel?.layer.cornerRadius = 25.0
+        customerLabel?.backgroundColor = .purple
+        customerLabel?.text = disappointedCustomer
     }
     
     func customerDeparted(customer: Customer) {
@@ -573,13 +603,17 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let messageCell = tableView.dequeueReusableCell(withIdentifier: "messageCell", for: indexPath) as! MessageCell
         
-        messageCell.messageLabel.text = messageList[indexPath.row]
+        UIView.animate(withDuration: 0.2) { [self] in
+            messageCell.messageLabel.text = messageList[indexPath.row]
+        }
+        
         
         let row = indexPath.row
-        messageCell.alpha = messageAlphas[row]
+        messageCell.messageLabel.alpha = messageAlphas[row]
         if row == 0 {
            
             messageCell.messageLabel.font = UIFont(name: "Arial Bold", size: 15.0)
+            messageCell.messageLabel.adjustsFontSizeToFitWidth
         }
         else {
             messageCell.messageLabel.font = UIFont(name: "Arial Bold", size: 10.0)

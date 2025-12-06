@@ -17,12 +17,15 @@ protocol BarberShopDelegate {
 //    func customerMovedFromWatingRoomToChair(customer: Customer, waitingRoomSlot:Int, barberChairNumber:Int)
     func customerFinishedHaircut(customer:Customer, barberChairNumber: Int)
     func customerFrustrated(customer:Customer)
+    func customerUnfulfilled(customer: Customer)
+    func customerDisappointed(customer: Customer)
     func customerSatisfied(customer:Customer)
     func customerCursing(customer:Customer)
     func customerDeparted(customer:Customer)
     func shopOpenStatus(isOpen:Bool)
     func updateWaitingRoom(waitingCustomers: [Customer])
     func sendMessage(message:String)
+    
 }
 
 let READ_EVENTS_FROM_FILE = false  // Id rather do this with Swift flags; for demo we'll just use a const
@@ -141,6 +144,18 @@ class BarberShop: ObservableObject {
                 }
                 
                 self.isOpen = false
+                
+                if currentTime > 1020 {
+                    let randomCustomerChance = Float.random(in: 0.0...1.0)
+                    if randomCustomerChance <= 0.05 {
+                        bgQ.sync(flags: .barrier) {
+                            let newCustomer = Customer(id: UUID(), name: "Random Customer", arrivalTime: currentTime + 5, frustrateTime: currentTime + 25, haircutDuration: -1, haircutFinish: -1)
+                            customerArrived(newCustomer: newCustomer)
+                        }
+                        
+                    }
+                }
+                
                 return
             }
             
@@ -267,7 +282,7 @@ class BarberShop: ObservableObject {
                         let activeCustomer = chairs.filter{$0.barber!.id == barber.id}[0].customer
                         
                         if activeCustomer != nil {
-                            timeToExit = activeCustomer!.haircutFinish
+                            timeToExit = activeCustomer!.haircutFinish+1
                         }
                         
                         let endShiftEvent = ClipperEvent(id: UUID(), ts: timeToExit, type: .barberGoHome, owner: barber.id)
@@ -405,16 +420,24 @@ class BarberShop: ObservableObject {
     }
     
     func customerArrived(newCustomer: Customer) {
+        if barberShopDelegate != nil {
+            barberShopDelegate?.customerDidArrive(customer: newCustomer)
+            barberShopDelegate?.sendMessage(message: "\(newCustomer.name) arrived!")
+        }
+        
+        
         if !isOpen {
-            customerFrustrated(madCustomer: newCustomer)
+            customerDisappointed(disappointedCustomer: newCustomer)
+            return
+            
         }
 //        DispatchQueue.main.async {
 //            self.statusMessage = "\(newCustomer.name) arrived!"
 //        }
         
-        if barberShopDelegate != nil {
-            barberShopDelegate?.sendMessage(message: "\(newCustomer.name) arrived!")
-        }
+//        if barberShopDelegate != nil {
+//            barberShopDelegate?.sendMessage(message: "\(newCustomer.name) arrived!")
+//        }
         
         if waitingRoom.count == 4 {
             debugPrint("Customer arrive to full waiting room - leaves in frustration")
@@ -422,9 +445,9 @@ class BarberShop: ObservableObject {
             return
         }
         
-        if barberShopDelegate != nil {
-            barberShopDelegate?.customerDidArrive(customer: newCustomer)
-        }
+//        if barberShopDelegate != nil {
+//            barberShopDelegate?.customerDidArrive(customer: newCustomer)
+//        }
         
         let freeChairs = chairs.filter{$0.customer==nil && $0.barber != nil}
         if freeChairs.count > 0 {
@@ -631,6 +654,22 @@ class BarberShop: ObservableObject {
         }
     }
     
+    func customerUnfulfilled(unfulfilledCustomer: Customer) {
+        if barberShopDelegate != nil {
+            barberShopDelegate?.sendMessage(message: "\(unfulfilledCustomer.name) leaves unfulfilled")
+            barberShopDelegate?.customerUnfulfilled(customer: unfulfilledCustomer)
+        }
+        self.customerDeparted(finishedCustomer: unfulfilledCustomer)
+    }
+    
+    func customerDisappointed(disappointedCustomer: Customer) {
+        if barberShopDelegate != nil {
+            barberShopDelegate?.sendMessage(message: "\(disappointedCustomer.name) leaves disappointed")
+            barberShopDelegate?.customerDisappointed(customer: disappointedCustomer)
+        }
+        self.customerDeparted(finishedCustomer: disappointedCustomer)
+    }
+    
     func customerLeavesCursing(cursingCustomer: Customer) {
         if barberShopDelegate != nil {
             barberShopDelegate?.customerCursing(customer: cursingCustomer)
@@ -801,7 +840,10 @@ class BarberShop: ObservableObject {
         case .customerSatisfied:
             let customer: Customer = customers.filter{$0.id == evt.owner}[0]
             customerSatisfied(happyCustomer: customer)
-            
+            // MARK: customerUnfulfilled case
+        case .customerUnfulfilled:
+            let customer: Customer = customers.filter{$0.id == evt.owner}[0]
+            customerUnfulfilled(unfulfilledCustomer: customer)
             // MARK: customerFinishedHaircut case
         case .customerFinishedHaircut:
 

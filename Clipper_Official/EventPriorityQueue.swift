@@ -25,6 +25,8 @@ enum EventType: CaseIterable {
     case customerFrustrated
     case customerSatisfied
     case customerFinishedHaircut
+    case customerUnfulfilled
+    case customerCursing
 }
 
 enum EventOwner: CaseIterable {
