@@ -149,6 +149,11 @@ class ViewController: UIViewController {
         
         timescaleSlider.frame.origin.y = shopView.frame.origin.y
         timescaleSlider.frame.origin.x = shopView.frame.origin.x - 40.0
+        
+        timescaleSlider.translatesAutoresizingMaskIntoConstraints = true
+        
+        timescaleSlider.trailingAnchor.constraint(equalTo: shopView.leadingAnchor, constant: 40.0).isActive = true
+        timescaleSlider.topAnchor.constraint(equalTo: shopView.topAnchor, constant: 0).isActive = true
     
         let pauseImage = UIImage(systemName: "pause.fill")
         let pauseView = UIImageView(image: pauseImage)
