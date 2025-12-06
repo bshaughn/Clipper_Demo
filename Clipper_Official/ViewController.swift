@@ -35,7 +35,39 @@ class WallClock: UIView {
     }
 }
 
+class CustomerLabel: UILabel {
+    let customerInfo: Customer
+    
+    init(customerInfo: Customer, frame: CGRect) {
+        self.customerInfo = customerInfo
+        super.init(frame: frame)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+class BarberLabel: UILabel {
+    let barberInfo: Barber
+    
+    init(barberInfo: Barber, frame: CGRect) {
+        self.barberInfo = barberInfo
+        super.init(frame: frame)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 class ViewController: UIViewController {
+
+    
+    @IBOutlet weak var messagesTableView: UITableView!
+    var messageList = [String]()
+    var messageAlphas = [CGFloat]()
     
     let normalCustomer = "🙂"
     let cursingCustomer = "🤬"
@@ -111,13 +143,28 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         timescaleSlider.transform = CGAffineTransform.init(rotationAngle: -CGFloat.pi/2)
+        
+        timescaleSlider.frame.origin.y = shopView.frame.origin.y
+        timescaleSlider.frame.origin.x = shopView.frame.origin.x - 40.0
     
-        let pauseImage = UIImage(systemName: "forward.fill")
-        let ffImage = UIImage(systemName: "pause.fill")
+        let pauseImage = UIImage(systemName: "pause.fill")
+        let pauseView = UIImageView(image: pauseImage)
+        let ffImage = UIImage(systemName: "forward.fill")
+        let ffView = UIImageView(image: ffImage)
+        
+        pauseView.transform = CGAffineTransform.init(rotationAngle: -CGFloat.pi/2)
+        ffView.transform = CGAffineTransform.init(rotationAngle: -CGFloat.pi/2)
+        
         
         barberShop.barberShopDelegate = self
         
         wallClock.setTime(st: barberShop.currentTime)
+        wallClock.layer.cornerRadius = 15.0
+        
+        messagesTableView.delegate = self
+        messagesTableView.dataSource = self
+        messagesTableView.register(UINib(nibName: "MessageCell", bundle: nil), forCellReuseIdentifier: "messageCell")
+        messagesTableView.separatorStyle = .none
         
         timescaleSlider.value = Float(barberShop.timeUISlider)
         
@@ -132,11 +179,20 @@ class ViewController: UIViewController {
         waves_9.alpha = 0
         
         let shopFrame = shopView.frame
+//        let shopGradient = CAGradientLayer()
+//        shopGradient.frame = shopView.frame
+//        shopView.layer.insertSublayer(shopGradient, at: 0)
+//        shopGradient.colors = [UIColor.white.cgColor, UIColor.red.cgColor]
+//        shopGradient.startPoint = CGPoint(x: shopFrame.origin.x+shopFrame.width/2, y: shopFrame.origin.y)
+//        shopGradient.startPoint = CGPoint(x: shopFrame.origin.x+shopFrame.width/2, y: shopFrame.origin.y+shopFrame.height)
+        
     
         allowableDrift.append(CGPoint(x: shopFrame.origin.x+5, y: shopFrame.origin.y))
         allowableDrift.append(CGPoint(x: shopFrame.origin.x-5, y: shopFrame.origin.y))
         allowableDrift.append(CGPoint(x: shopFrame.origin.x, y: shopFrame.origin.y+5))
         allowableDrift.append(CGPoint(x: shopFrame.origin.x, y: shopFrame.origin.y-5))
+        
+//        self.view.bringSubviewToFront(messagesTableView)
     }
 
     func moveWaves() {
@@ -215,6 +271,74 @@ class ViewController: UIViewController {
             debugPrint("????")
         }
     }
+    
+    func updateMessageTable() {
+        var i = messageList.count - 1
+        
+        while i >= 0 {
+            var tableRow = messagesTableView.cellForRow(at: IndexPath(row: i, section: 0))
+            messageAlphas[i] -= 0.1
+            if messageAlphas[i] <= 0 {
+                messageList.remove(at: i)
+            }
+            i -= 1
+        }
+        
+//        DispatchQueue.main.async { [self] in
+//            messagesTableView.reloadData()
+//        }
+    }
+    
+    
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        let touchPoint = touches.first?.location(in: shopView)
+//
+//        print("touch started")
+        
+//        if let touchedView = self.shopView.) {
+//            for v in touchedView.subviews {
+//                if (v as? CustomerLabel) != nil {
+//                    print("Customer: \((v as! CustomerLabel).customerInfo)")
+//                }
+//
+//                if (v as? BarberLabel) != nil {
+//                    print("Barber: \((v as! BarberLabel).barberInfo)")
+//                }
+//            }
+//        }
+        
+//        let pointInView = shopView.convert(touchPoint!, from: self)
+        
+        
+//        for v in self.view.subviews {
+//            print("Touched View: \(String(describing: view as? UILabel))")
+//            if (v as? CustomerLabel) != nil {
+//                print("Customer: \((v as! CustomerLabel).customerInfo)")
+//            }
+//
+//            if (v as? BarberLabel) != nil {
+//                print("Barber: \((v as! BarberLabel).barberInfo)")
+//            }
+//        }
+        
+        
+//    }
+    
+//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        let touchPoint = touches.first?.location(in: shopView)
+
+//        if let touchedView = self.view.hitTest(touchPoint!, with: event) {
+//            for v in touchedView.subviews {
+//                if (v as? CustomerLabel) != nil {
+//                    print("Touched Customer Label!")
+//                }
+//
+//                if (v as? BarberLabel) != nil {
+//                    print("Touched Barber Label!")
+//                }
+//            }
+//        }
+//    }
 }
 
 extension ViewController: BarberShopDelegate {
@@ -276,12 +400,15 @@ extension ViewController: BarberShopDelegate {
     func barberDidArrive(barber: Barber, barberChairNumber: Int) {
         let barberSlots = [chair_1_barber, chair_2_barber, chair_3_barber, chair_4_barber]
         
-        let barberLabel = UILabel(frame: departureSpot.frame)
+//        let barberLabel = UILabel(frame: departureSpot.frame)
+//        let barberLabel = BarberLabel(frame: departureSpot.frame)
+        let barberLabel = BarberLabel(barberInfo: barber, frame: departureSpot.frame)
         barberLabel.clipsToBounds = true
         barberLabel.layer.cornerRadius = 25.0
         barberLabel.textAlignment = .center
         barberLabel.font = UIFont.systemFont(ofSize: 38.0)
         barberLabel.text = barber.avatar
+        barberLabel.isUserInteractionEnabled = true
         
         if wallClock.clockTime < 780 {
             barberLabel.backgroundColor = .lightGray
@@ -289,7 +416,7 @@ extension ViewController: BarberShopDelegate {
         else {
             barberLabel.backgroundColor = .darkGray
         }
-    
+        
         
         barberLabels[barber.id.uuidString] = barberLabel
         
@@ -309,12 +436,15 @@ extension ViewController: BarberShopDelegate {
     }
     
     func customerDidArrive(customer: Customer) {
-        var customerLabel = UILabel(frame: arrivalSpot.frame)
+//        var customerLabel = UILabel(frame: arrivalSpot.frame)
+//        var customerLabel = CustomerLabel(frame: arrivalSpot.frame)
+        var customerLabel = CustomerLabel(customerInfo: customer, frame: arrivalSpot.frame)
         
         customerImageViews[customer.id.uuidString] = customerLabel
         customerLabel.font = UIFont.systemFont(ofSize: 38.0)
         customerLabel.textAlignment = .center
         customerLabel.text = normalCustomer
+        customerLabel.isUserInteractionEnabled = true
         self.shopView.addSubview(customerLabel)
     }
     
@@ -406,6 +536,7 @@ extension ViewController: BarberShopDelegate {
         moveWaves()
         moveScissors()
 //        moveShop()  this works, but I'll comment it out in case the user doesnt like the shop drifting
+        updateMessageTable()
     }
     
     func shopOpenStatus(isOpen: Bool) {
@@ -418,5 +549,58 @@ extension ViewController: BarberShopDelegate {
             leftDoor.image = UIImage(named: "Door_Closed")
         }
     }
+    
+    func sendMessage(message: String) {
+        messageList.insert(message, at: 0)
+        messageAlphas.insert(1.0, at: 0)
+        if messageList.count > 7 {
+            messageList.remove(at: messageList.count - 1)
+            messageAlphas.remove(at: messageList.count - 1)
+        }
+        
+        DispatchQueue.main.async {
+            self.messagesTableView.reloadData()
+
+        }
+    }
+}
+
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        messageList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let messageCell = tableView.dequeueReusableCell(withIdentifier: "messageCell", for: indexPath) as! MessageCell
+        
+        messageCell.messageLabel.text = messageList[indexPath.row]
+        
+        let row = indexPath.row
+        messageCell.alpha = messageAlphas[row]
+        if row == 0 {
+           
+            messageCell.messageLabel.font = UIFont(name: "Arial Bold", size: 15.0)
+        }
+        else {
+            messageCell.messageLabel.font = UIFont(name: "Arial Bold", size: 10.0)
+        }
+        
+//        switch row {
+//        case 0:
+//            messageCell.alpha = 1
+//        case 1:
+//            messageCell.alpha = 0.75
+//        case 2:
+//            messageCell.alpha = 0.5
+//        case 3:
+//            messageCell.alpha = 0.25
+//        default:
+//            debugPrint("Somehow got an invalid row number???")
+//        }
+        
+        return messageCell
+    }
+    
+    
 }
 

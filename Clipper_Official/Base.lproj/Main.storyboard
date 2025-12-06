@@ -57,6 +57,12 @@
                                         <rect key="frame" x="762" y="178" width="83" height="64"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="YaU-Rh-Cjw">
+                                        <rect key="frame" x="50" y="34" width="215" height="272"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableView>
                                     <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="QNW-YZ-YRj">
                                         <rect key="frame" x="146" y="100" width="160" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -79,6 +85,11 @@
                                 <rect key="frame" x="324" y="34" width="484" height="258"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yxU-4t-9sn">
+                                        <rect key="frame" x="0.0" y="183" width="484" height="75"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="1" green="0.24548775809151785" blue="0.21487063453311012" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </view>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Clipper_Poster" translatesAutoresizingMaskIntoConstraints="NO" id="ePF-dL-2rf">
                                         <rect key="frame" x="45" y="49" width="191" height="109"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -305,6 +316,7 @@
                         <outlet property="chair_4_customer" destination="lAX-oa-dJ5" id="XOQ-lU-zeK"/>
                         <outlet property="departureSpot" destination="y6y-hc-TAu" id="ome-3b-g76"/>
                         <outlet property="leftDoor" destination="xzQ-jb-Ynr" id="LXS-d4-n60"/>
+                        <outlet property="messagesTableView" destination="YaU-Rh-Cjw" id="Ai3-A2-ttO"/>
                         <outlet property="rightDoor" destination="rTL-yN-e24" id="QWD-y2-M7D"/>
                         <outlet property="scissor_1" destination="8Fc-5l-xbg" id="Vvv-OA-8pc"/>
                         <outlet property="scissor_2" destination="Z6B-Ve-QyR" id="trv-ec-bMo"/>

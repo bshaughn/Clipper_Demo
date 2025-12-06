@@ -22,6 +22,7 @@ protocol BarberShopDelegate {
     func customerDeparted(customer:Customer)
     func shopOpenStatus(isOpen:Bool)
     func updateWaitingRoom(waitingCustomers: [Customer])
+    func sendMessage(message:String)
 }
 
 let READ_EVENTS_FROM_FILE = false  // Id rather do this with Swift flags; for demo we'll just use a const
@@ -172,7 +173,7 @@ class BarberShop: ObservableObject {
     var timeUISlider = 0.1 {
         didSet {
             timeScale = 22 - Int(22.0*timeUISlider)
-            print("Timescale is now \(timeScale)")
+//            print("Timescale is now \(timeScale)")
             
             if timeUISlider >= 0 && timeUISlider <= 0.4 {
                 MIN_TIMEBUFFER = 80
@@ -245,12 +246,20 @@ class BarberShop: ObservableObject {
             if isOpen == oldValue {return}
             
             if isOpen {
-                statusMessage = "Barbershop is OPEN"
+//                statusMessage = "Barbershop is OPEN"
+                if barberShopDelegate != nil {
+                    barberShopDelegate?.sendMessage(message: "Clipper is open for business!")
+                }
                 // bring in shift 1
                 shift = 1
             }
             else {
-                statusMessage = "Barbershop is CLOSED"
+//                statusMessage = "Barbershop is CLOSED"
+                
+                if barberShopDelegate != nil {
+                    barberShopDelegate?.sendMessage(message: "Clipper is closed")
+                }
+                
                 // send home shift 2
                 bgQ.sync(flags: .barrier) {
                     for barber in barbers {
@@ -282,7 +291,7 @@ class BarberShop: ObservableObject {
                             
                             if c_idx != nil {
                                 customers.remove(at: c_idx!)
-                                debugPrint("customers count after removal (closed): \(customers.count)")
+//                                debugPrint("customers count after removal (closed): \(customers.count)")
                             }
                         }
                     }
@@ -399,8 +408,12 @@ class BarberShop: ObservableObject {
         if !isOpen {
             customerFrustrated(madCustomer: newCustomer)
         }
-        DispatchQueue.main.async {
-            self.statusMessage = "\(newCustomer.name) arrived!"
+//        DispatchQueue.main.async {
+//            self.statusMessage = "\(newCustomer.name) arrived!"
+//        }
+        
+        if barberShopDelegate != nil {
+            barberShopDelegate?.sendMessage(message: "\(newCustomer.name) arrived!")
         }
         
         if waitingRoom.count == 4 {
@@ -475,7 +488,7 @@ class BarberShop: ObservableObject {
             if customerIndex != nil {
 //                departedCustomers.append(customers[customerIndex!])
                 customers.remove(at: customerIndex!)
-                debugPrint("customers count after removal (departed-closed): \(customers.count)")
+//                debugPrint("customers count after removal (departed-closed): \(customers.count)")
             }
         }
         
@@ -491,7 +504,7 @@ class BarberShop: ObservableObject {
         
         if customerIndex != nil {
             customers.remove(at: customerIndex!)
-            debugPrint("customers count after removal (departed): \(customers.count)")
+//            debugPrint("customers count after removal (departed): \(customers.count)")
             
             
             if barberShopDelegate != nil {
@@ -560,24 +573,26 @@ class BarberShop: ObservableObject {
             self.customerDeparted(finishedCustomer: happyCustomer)
 //            self.satisfiedCustomers.append(happyCustomer)
 //        }
-        DispatchQueue.main.async { [self] in
-//            debugPrint("PRinting customer satisfied")
-                self.statusMessage = "\(happyCustomer.name) is satisfied!"
+//        DispatchQueue.main.async { [self] in
+////            debugPrint("PRinting customer satisfied")
+//                self.statusMessage = "\(happyCustomer.name) is satisfied!"
             
-//            if barberShopDelegate != nil {
-//                barberShopDelegate?.customerSatisfied(customer: happyCustomer)
-//            }
+            
+            
+            if barberShopDelegate != nil {
+                barberShopDelegate?.sendMessage(message: "\(happyCustomer.name) leaves satisfied")
+            }
 //
 //            bgQ.sync(flags: .barrier) { [self] in
 //                self.customerDeparted(finishedCustomer: happyCustomer)
 //                self.satisfiedCustomers.append(happyCustomer)
 //            }
-        }
+//        }
     }
     
     func customerFrustrated(madCustomer:Customer) {
         if madCustomer.haircutFinish > currentTime {
-            debugPrint("Received frustration event but customer is content")
+//            debugPrint("Received frustration event but customer is content")
             return
         }
         
@@ -591,14 +606,14 @@ class BarberShop: ObservableObject {
             self.customerDeparted(finishedCustomer: madCustomer)
 //        }
         
-        DispatchQueue.main.async { [self] in
+//        DispatchQueue.main.async { [self] in
 //            if madCustomer.haircutFinish >= currentTime {
 //                debugPrint("Received frustration event but customer is content")
 //                return
 //            }
 //            debugPrint("PRinting customer frustrated")
 
-            self.statusMessage = "\(madCustomer.name) is frustrated!"
+//            self.statusMessage = "\(madCustomer.name) is frustrated!"
             
 //            if barberShopDelegate != nil {
 //                barberShopDelegate?.customerFrustrated(customer: madCustomer)
@@ -609,6 +624,10 @@ class BarberShop: ObservableObject {
 //            bgQ.sync(flags: .barrier) { [self] in
 //                self.customerDeparted(finishedCustomer: madCustomer)
 //            }
+//        }
+        
+        if barberShopDelegate != nil {
+            barberShopDelegate?.sendMessage(message: "\(madCustomer.name) leaves frustrated")
         }
     }
     
@@ -620,9 +639,9 @@ class BarberShop: ObservableObject {
 //        bgQ.sync(flags: .barrier) { [self] in
             self.customerDeparted(finishedCustomer: cursingCustomer)
 //        }
-        DispatchQueue.main.async { [self] in
+//        DispatchQueue.main.async { [self] in
 
-            self.statusMessage = "\(cursingCustomer.name) leaves cursing!"
+//            self.statusMessage = "\(cursingCustomer.name) leaves cursing!"
             
 //            if barberShopDelegate != nil {
 //                barberShopDelegate?.customerCursing(customer: cursingCustomer)
@@ -631,6 +650,10 @@ class BarberShop: ObservableObject {
 //            bgQ.sync(flags: .barrier) { [self] in
 //                self.customerDeparted(finishedCustomer: cursingCustomer)
 //            }
+//        }
+        
+        if barberShopDelegate != nil {
+            barberShopDelegate?.sendMessage(message: "\(cursingCustomer.name) leaves cursing")
         }
     }
     
@@ -671,6 +694,7 @@ class BarberShop: ObservableObject {
             
             if barberShopDelegate != nil {
                 barberShopDelegate?.barberDidArrive(barber: barber, barberChairNumber: freeChairIndex!)
+                barberShopDelegate?.sendMessage(message: "\(barber.name) started shift")
             }
             
         }
@@ -686,13 +710,18 @@ class BarberShop: ObservableObject {
             
             // MARK: barberGoHome case
         case .barberGoHome:
-            DispatchQueue.main.async { [self] in
+//            DispatchQueue.main.async { [self] in
                 guard let barber = findBarber(barberID: evt.owner) else {
                     statusMessage = "BARBER \(evt.owner) FAILED TO START SHIFT"
                     return
                 }
                 
-                self.statusMessage = "\(barber.name) went home"
+//                self.statusMessage = "\(barber.name) went home"
+                
+            if barberShopDelegate != nil {
+                barberShopDelegate?.sendMessage(message: "\(barber.name) ended shift")
+            }
+                
                 
                 let barberChair = chairs.filter{$0.barber?.id == barber.id}[0]
                 let barberChairIdx = chairs.firstIndex { bc in
@@ -722,7 +751,7 @@ class BarberShop: ObservableObject {
                 barbers.remove(at: barberInt!)
                 
 
-            }
+//            }
             
             // MARK: barberStartShift case
         case .barberStartShift:
