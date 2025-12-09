@@ -117,6 +117,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var waitingRoom3: UILabel!
     @IBOutlet weak var waitingRoom4: UILabel!
     
+    @IBOutlet weak var leftBarberPole: UIImageView!
+    @IBOutlet weak var rightBarberPole: UIImageView!
+    
     @IBOutlet weak var arrivalSpot: UILabel!
     @IBOutlet weak var departureSpot: UILabel!
     
@@ -152,8 +155,8 @@ class ViewController: UIViewController {
         
         timescaleSlider.translatesAutoresizingMaskIntoConstraints = true
         
-        timescaleSlider.trailingAnchor.constraint(equalTo: shopView.leadingAnchor, constant: 40.0).isActive = true
-        timescaleSlider.topAnchor.constraint(equalTo: shopView.topAnchor, constant: 0).isActive = true
+//        timescaleSlider.trailingAnchor.constraint(equalTo: shopView.leadingAnchor, constant: 40.0).isActive = true
+//        timescaleSlider.topAnchor.constraint(equalTo: shopView.topAnchor, constant: 0).isActive = true
     
         let pauseImage = UIImage(systemName: "pause.fill")
         let pauseView = UIImageView(image: pauseImage)
@@ -189,6 +192,9 @@ class ViewController: UIViewController {
         waves_7.alpha = 0
         waves_8.alpha = 0
         waves_9.alpha = 0
+        
+        leftBarberPole.layer.cornerRadius = 15
+        rightBarberPole.layer.cornerRadius = 15
         
         let shopFrame = shopView.frame
 //        let shopGradient = CAGradientLayer()
@@ -243,10 +249,10 @@ class ViewController: UIViewController {
         for scissor in scissors {
             let currentTime = wallClock.clockTime
             if currentTime%2 == 0 {
-                scissor?.transform = CGAffineTransform(rotationAngle: CGFloat.pi/6)
+                scissor?.transform = CGAffineTransform(rotationAngle: CGFloat.pi/7)
             }
             else {
-                scissor?.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/6)
+                scissor?.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/7)
             }
         }
     }

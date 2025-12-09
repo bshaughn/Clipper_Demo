@@ -871,8 +871,7 @@ class BarberShop: ObservableObject {
                 })!)
 
             }
-            
-            
+        
             // originally I thought the customers could be disappointed with their haircut
 //            let satisfactionOdds = Float.random(in: 0.0...1.0)
 //            if satisfactionOdds <= 0.3 {
