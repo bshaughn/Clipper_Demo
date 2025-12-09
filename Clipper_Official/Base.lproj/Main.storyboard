@@ -275,7 +275,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dkc-Xy-9su">
-                                        <rect key="frame" x="215" y="188" width="50" height="50"/>
+                                        <rect key="frame" x="205" y="188" width="50" height="50"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Dkc-Xy-9su" secondAttribute="height" multiplier="1:1" id="KgR-jg-Bd4"/>
@@ -346,7 +346,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Clipper_Poster" translatesAutoresizingMaskIntoConstraints="NO" id="ePF-dL-2rf">
-                                        <rect key="frame" x="9" y="78" width="146" height="86"/>
+                                        <rect key="frame" x="20" y="78" width="146" height="86"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="146" id="42V-EQ-WHP"/>
                                             <constraint firstAttribute="width" secondItem="ePF-dL-2rf" secondAttribute="height" multiplier="73:43" id="Lgl-Zh-Zs1"/>
@@ -354,7 +354,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CLIPPER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yb2-J9-h6Y">
-                                        <rect key="frame" x="9" y="48" width="146" height="30"/>
+                                        <rect key="frame" x="20" y="48" width="146" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="5hu-1U-i6v"/>
                                             <constraint firstAttribute="width" secondItem="Yb2-J9-h6Y" secondAttribute="height" multiplier="73:15" id="Qis-rI-P1Z"/>
@@ -365,7 +365,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nEa-6J-38i" customClass="WallClock" customModule="Clipper_Official" customModuleProvider="target">
-                                        <rect key="frame" x="22" y="8" width="120" height="33"/>
+                                        <rect key="frame" x="33" y="8" width="120" height="33"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gvV-hm-mqz">
                                                 <rect key="frame" x="8" y="6" width="104" height="21"/>
@@ -432,7 +432,7 @@
                                     <constraint firstAttribute="bottom" secondItem="rTL-yN-e24" secondAttribute="bottom" id="Ovc-2k-aGM"/>
                                     <constraint firstAttribute="trailing" secondItem="FVT-f1-cfk" secondAttribute="trailing" constant="63" id="P6B-zN-wxi"/>
                                     <constraint firstAttribute="trailing" secondItem="yxU-4t-9sn" secondAttribute="trailing" id="PEA-hB-Mpk"/>
-                                    <constraint firstItem="Dkc-Xy-9su" firstAttribute="leading" secondItem="CLT-dp-Tne" secondAttribute="trailing" constant="-5" id="PML-Rp-Zoy"/>
+                                    <constraint firstItem="Dkc-Xy-9su" firstAttribute="leading" secondItem="CLT-dp-Tne" secondAttribute="trailing" priority="750" constant="-5" id="PML-Rp-Zoy"/>
                                     <constraint firstItem="6X8-ah-Bds" firstAttribute="centerX" secondItem="UhQ-Tj-X47" secondAttribute="centerX" id="PfO-wd-5fp"/>
                                     <constraint firstAttribute="bottom" secondItem="DgS-IJ-XHv" secondAttribute="bottom" constant="-27" id="S5v-cL-0Ii"/>
                                     <constraint firstItem="1m2-Ms-mzI" firstAttribute="trailing" secondItem="RcS-Kd-2gU" secondAttribute="trailing" constant="-15" id="T3e-XL-qpy"/>
@@ -464,7 +464,7 @@
                                     <constraint firstItem="1m2-Ms-mzI" firstAttribute="leading" secondItem="RcS-Kd-2gU" secondAttribute="leading" constant="15" id="kTN-VL-KKQ"/>
                                     <constraint firstAttribute="bottom" secondItem="xzQ-jb-Ynr" secondAttribute="bottom" id="kVo-zi-SOT"/>
                                     <constraint firstItem="Yb2-J9-h6Y" firstAttribute="trailing" secondItem="ePF-dL-2rf" secondAttribute="trailing" id="lJA-Nw-QhT"/>
-                                    <constraint firstItem="rH2-LZ-rMM" firstAttribute="leading" secondItem="Dkc-Xy-9su" secondAttribute="trailing" id="nNQ-3j-6kT"/>
+                                    <constraint firstItem="rH2-LZ-rMM" firstAttribute="leading" secondItem="Dkc-Xy-9su" secondAttribute="trailing" constant="10" id="nNQ-3j-6kT"/>
                                     <constraint firstAttribute="bottom" secondItem="yxU-4t-9sn" secondAttribute="bottom" id="nsP-U8-yCI"/>
                                     <constraint firstItem="Ltz-vo-xkE" firstAttribute="centerY" secondItem="UhQ-Tj-X47" secondAttribute="centerY" id="oIl-d3-CKP"/>
                                     <constraint firstItem="0S6-Gh-rDP" firstAttribute="leading" secondItem="Ltz-vo-xkE" secondAttribute="leading" constant="15" id="rG9-fe-AQl"/>
@@ -476,7 +476,7 @@
                                     <constraint firstItem="lAX-oa-dJ5" firstAttribute="trailing" secondItem="6X8-ah-Bds" secondAttribute="trailing" constant="-15" id="wLy-AT-Vdg"/>
                                     <constraint firstItem="dXn-Db-CWa" firstAttribute="centerX" secondItem="xzQ-jb-Ynr" secondAttribute="centerX" id="woA-xv-rY0"/>
                                     <constraint firstItem="FVT-f1-cfk" firstAttribute="centerX" secondItem="rTL-yN-e24" secondAttribute="centerX" constant="4.5" id="xPS-tQ-DWe"/>
-                                    <constraint firstItem="ePF-dL-2rf" firstAttribute="leading" secondItem="vyo-CC-WdB" secondAttribute="leading" constant="9" id="xrZ-fi-zlV"/>
+                                    <constraint firstItem="ePF-dL-2rf" firstAttribute="leading" secondItem="vyo-CC-WdB" secondAttribute="leading" constant="20" id="xrZ-fi-zlV"/>
                                     <constraint firstItem="sYW-3j-BO5" firstAttribute="centerY" secondItem="lAX-oa-dJ5" secondAttribute="centerY" id="xwH-ql-hEu"/>
                                     <constraint firstItem="lAX-oa-dJ5" firstAttribute="leading" secondItem="6X8-ah-Bds" secondAttribute="leading" constant="15" id="yBI-Vm-GMN"/>
                                     <constraint firstItem="we1-ed-QPl" firstAttribute="top" secondItem="Ltz-vo-xkE" secondAttribute="top" id="zwq-MT-1JH"/>
