@@ -108,6 +108,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var chair_3_barber: UILabel!
     @IBOutlet weak var chair_4_barber: UILabel!
     
+    @IBOutlet weak var barber_label_1: UILabel!
+    @IBOutlet weak var barber_label_2: UILabel!
+    @IBOutlet weak var barber_label_3: UILabel!
+    @IBOutlet weak var barber_label_4: UILabel!
+    
     @IBOutlet weak var scissor_1: UILabel!
     @IBOutlet weak var scissor_2: UILabel!
     @IBOutlet weak var scissor_3: UILabel!
@@ -212,6 +217,15 @@ class ViewController: UIViewController {
         
         leftBarberPole.layer.cornerRadius = 15
         rightBarberPole.layer.cornerRadius = 15
+        
+        barber_label_1.adjustsFontSizeToFitWidth = true
+        barber_label_1.clipsToBounds = true
+        barber_label_2.adjustsFontSizeToFitWidth = true
+        barber_label_2.clipsToBounds = true
+        barber_label_3.adjustsFontSizeToFitWidth = true
+        barber_label_3.clipsToBounds = true
+        barber_label_4.adjustsFontSizeToFitWidth = true
+        barber_label_4.clipsToBounds = true
         
         let benchFrame = waitingBench.frame
         
@@ -404,13 +418,19 @@ extension ViewController: BarberShopDelegate {
     func barberWentHome(barber: Barber, chairIndex: Int) {
         
         let barberList = [chair_1_barber, chair_2_barber, chair_3_barber, chair_4_barber]
+        let barberNameLabels = [barber_label_1, barber_label_2, barber_label_3, barber_label_4]
         
         let departingBarberLabel = barberLabels[barber.id.uuidString]
         
         UIView.transition(with: departingBarberLabel!, duration: 0.2) { [self] in
             departingBarberLabel!.frame = departureSpot.frame
+            barberNameLabels[chairIndex]?.text = ""
         } completion: { _ in
             departingBarberLabel!.removeFromSuperview()
+//            DispatchQueue.main.async {
+//                barberNameLabels[chairIndex]?.text = ""
+//            }
+            
         }
     }
     
@@ -456,6 +476,7 @@ extension ViewController: BarberShopDelegate {
     
     func barberDidArrive(barber: Barber, barberChairNumber: Int) {
         let barberSlots = [chair_1_barber, chair_2_barber, chair_3_barber, chair_4_barber]
+        let barberNameLabels = [barber_label_1, barber_label_2, barber_label_3, barber_label_4]
         
 //        let barberLabel = UILabel(frame: departureSpot.frame)
 //        let barberLabel = BarberLabel(frame: departureSpot.frame)
@@ -465,7 +486,6 @@ extension ViewController: BarberShopDelegate {
         barberLabel.textAlignment = .center
         barberLabel.font = UIFont.systemFont(ofSize: 38.0)
         barberLabel.text = barber.avatar
-        barberLabel.isUserInteractionEnabled = true
         
         if wallClock.clockTime < 780 {
             barberLabel.backgroundColor = .lightGray
@@ -480,15 +500,16 @@ extension ViewController: BarberShopDelegate {
         self.shopView.addSubview(barberLabel)
 //        barberSlots[barberChairNumber]?.text = barber.avatar
         
-        UIView.transition(with: barberLabel, duration: 0.2) {
-            barberLabel.frame = barberSlots[barberChairNumber]!.frame
-        } //completion: { _ in
-//            UIView.animate(withDuration: 0.15) {
-//                barberLabel.backgroundColor = .green
-//            } completion: { _ in
-//                barberLabel.backgroundColor = .clear
-//            }
-//        }
+        
+            UIView.transition(with: barberLabel, duration: 0.2) {
+                barberLabel.frame = barberSlots[barberChairNumber]!.frame
+            } completion: { _ in
+                DispatchQueue.main.async {
+                    barberNameLabels[barberChairNumber]?.text = barber.name
+                }
+            }
+        
+
         
     }
     
