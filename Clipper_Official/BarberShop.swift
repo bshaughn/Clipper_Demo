@@ -363,7 +363,7 @@ class BarberShop: ObservableObject {
         
         if READ_EVENTS_FROM_FILE {
             bgQ.sync(flags: .barrier) {
-                if let path = Bundle.main.path(forResource: "testfile", ofType: "txt") {
+                if let path = Bundle.main.path(forResource: "testfile2", ofType: "txt") {
                     let fileURL = URL(fileURLWithPath: path)
                         do {
                             try readTextFileLines(from: fileURL)
