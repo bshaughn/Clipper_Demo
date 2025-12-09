@@ -118,6 +118,17 @@ class ViewController: UIViewController {
     @IBOutlet weak var waitingRoom3: UILabel!
     @IBOutlet weak var waitingRoom4: UILabel!
     
+    @IBOutlet weak var waitingRoom4LeadingConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var waitingRoom3LeadingConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var waitingRoom2LeadingConstraint: NSLayoutConstraint!
+    
+    var waitingOffsetSize:Int? = nil
+    
+    @IBOutlet weak var waitingBench: UIImageView!
+    @IBOutlet weak var benchWidthConstraint: NSLayoutConstraint!
+   
     @IBOutlet weak var leftBarberPole: UIImageView!
     @IBOutlet weak var rightBarberPole: UIImageView!
     
@@ -130,6 +141,8 @@ class ViewController: UIViewController {
     
     var customerImageViews = [String: UILabel]()
     var barberLabels = [String: UILabel]()
+    
+    
     
     @IBAction func timescaleSliderMoved(_ sender: Any) {
         let sliderValue = (sender as! UISlider).value
@@ -200,6 +213,16 @@ class ViewController: UIViewController {
         leftBarberPole.layer.cornerRadius = 15
         rightBarberPole.layer.cornerRadius = 15
         
+        let benchFrame = waitingBench.frame
+        
+        // we're using 50x50 squares for the customer and barber avatars; hopefully screen sizes will always allow the bench to be at least 50 wide
+        
+//        let offsetSize = (benchWidthConstraint.constant-200)/4
+        
+//        waitingRoom2LeadingConstraint.constant = offsetSize
+//        waitingRoom3LeadingConstraint.constant = offsetSize
+//        waitingRoom4LeadingConstraint.constant = offsetSize
+        
         let shopFrame = shopView.frame
 //        let shopGradient = CAGradientLayer()
 //        shopGradient.frame = shopView.frame
@@ -217,6 +240,16 @@ class ViewController: UIViewController {
 //        self.view.bringSubviewToFront(messagesTableView)
     }
 
+    override func viewDidLayoutSubviews() {
+        if waitingOffsetSize == nil && waitingBench.frame.width > 50  {  // wait until autolayout has chosed the final length for the bench
+            waitingOffsetSize = (Int(waitingBench.frame.width)-200)/4
+            
+            waitingRoom2LeadingConstraint.constant = CGFloat(waitingOffsetSize!)
+            waitingRoom3LeadingConstraint.constant = CGFloat(waitingOffsetSize!)
+            waitingRoom4LeadingConstraint.constant = CGFloat(waitingOffsetSize!)
+        }
+    }
+    
     func moveWaves() {
        let wavesArray = [waves_1, waves_2, waves_3, waves_4, waves_5, waves_6, waves_7, waves_8, waves_9]
         
