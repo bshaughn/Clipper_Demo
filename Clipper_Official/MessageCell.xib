@@ -19,12 +19,12 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JhI-CF-w94">
-                        <rect key="frame" x="139.33333333333334" y="13" width="41.333333333333343" height="18"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="15"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
-                        <color key="shadowColor" systemColor="labelColor"/>
+                        <color key="shadowColor" systemColor="tintColor"/>
                         <size key="shadowOffset" width="-2" height="1"/>
                     </label>
                 </subviews>
@@ -35,6 +35,10 @@
             <constraints>
                 <constraint firstItem="JhI-CF-w94" firstAttribute="centerX" secondItem="njF-e1-oar" secondAttribute="centerX" id="3kt-d8-CHp"/>
                 <constraint firstItem="JhI-CF-w94" firstAttribute="centerY" secondItem="njF-e1-oar" secondAttribute="centerY" id="9MR-Fg-DYC"/>
+                <constraint firstItem="JhI-CF-w94" firstAttribute="leading" secondItem="njF-e1-oar" secondAttribute="leading" id="AmK-vZ-xoz"/>
+                <constraint firstItem="njF-e1-oar" firstAttribute="bottom" secondItem="JhI-CF-w94" secondAttribute="bottom" id="Bq8-oG-7EW"/>
+                <constraint firstItem="JhI-CF-w94" firstAttribute="top" secondItem="njF-e1-oar" secondAttribute="top" id="goo-vy-Ioz"/>
+                <constraint firstItem="njF-e1-oar" firstAttribute="trailing" secondItem="JhI-CF-w94" secondAttribute="trailing" id="xKU-vw-tSe"/>
             </constraints>
             <connections>
                 <outlet property="messageLabel" destination="JhI-CF-w94" id="oRk-vC-HS1"/>
@@ -43,8 +47,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

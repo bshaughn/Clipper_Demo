@@ -14,6 +14,8 @@ class MessageCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        messageLabel.adjustsFontSizeToFitWidth = true
+        messageLabel.clipsToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
