@@ -80,6 +80,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var clipperPoster: UIImageView!
     
+    @IBOutlet weak var clipperSign: UILabel!
     @IBOutlet weak var timeScaleSlider: UISlider!
     
     @IBOutlet weak var leftDoor: UIImageView!
@@ -182,6 +183,9 @@ class ViewController: UIViewController {
         
         clipperPoster.layer.borderColor = UIColor.brown.cgColor
         clipperPoster.layer.borderWidth = 5
+        
+        clipperSign.adjustsFontSizeToFitWidth = true
+        clipperSign.clipsToBounds = true
         
         waves_1.alpha = 0
         waves_2.alpha = 0
