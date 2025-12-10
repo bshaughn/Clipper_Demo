@@ -18,10 +18,10 @@
 		90FFF5EC2EDF7A5400B4B1F1 /* Clipper_OfficialUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FFF5EB2EDF7A5400B4B1F1 /* Clipper_OfficialUITestsLaunchTests.swift */; };
 		90FFF5FA2EDF7A6F00B4B1F1 /* BarberShop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FFF5F82EDF7A6E00B4B1F1 /* BarberShop.swift */; };
 		90FFF5FB2EDF7A6F00B4B1F1 /* EventPriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FFF5F92EDF7A6F00B4B1F1 /* EventPriorityQueue.swift */; };
-		90FFF5FE2EDF7AEA00B4B1F1 /* testfile2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 90FFF5FC2EDF7AE900B4B1F1 /* testfile2.txt */; };
 		90FFF5FF2EDF7AEA00B4B1F1 /* testfile.txt in Resources */ = {isa = PBXBuildFile; fileRef = 90FFF5FD2EDF7AEA00B4B1F1 /* testfile.txt */; };
 		90FFF6062EE39C4400B4B1F1 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FFF6042EE39C4400B4B1F1 /* MessageCell.swift */; };
 		90FFF6072EE39C4400B4B1F1 /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 90FFF6052EE39C4400B4B1F1 /* MessageCell.xib */; };
+		90FFF6092EE983A900B4B1F1 /* testfile2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 90FFF6082EE983A800B4B1F1 /* testfile2.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,10 +57,10 @@
 		90FFF5EB2EDF7A5400B4B1F1 /* Clipper_OfficialUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clipper_OfficialUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		90FFF5F82EDF7A6E00B4B1F1 /* BarberShop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarberShop.swift; sourceTree = "<group>"; };
 		90FFF5F92EDF7A6F00B4B1F1 /* EventPriorityQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventPriorityQueue.swift; sourceTree = "<group>"; };
-		90FFF5FC2EDF7AE900B4B1F1 /* testfile2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testfile2.txt; sourceTree = "<group>"; };
 		90FFF5FD2EDF7AEA00B4B1F1 /* testfile.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testfile.txt; sourceTree = "<group>"; };
 		90FFF6042EE39C4400B4B1F1 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		90FFF6052EE39C4400B4B1F1 /* MessageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
+		90FFF6082EE983A800B4B1F1 /* testfile2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testfile2.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				90FFF5FD2EDF7AEA00B4B1F1 /* testfile.txt */,
-				90FFF5FC2EDF7AE900B4B1F1 /* testfile2.txt */,
+				90FFF6082EE983A800B4B1F1 /* testfile2.txt */,
 				90FFF5C72EDF7A5000B4B1F1 /* Clipper_Official */,
 				90FFF5DE2EDF7A5400B4B1F1 /* Clipper_OfficialTests */,
 				90FFF5E82EDF7A5400B4B1F1 /* Clipper_OfficialUITests */,
@@ -250,8 +250,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				90FFF5D52EDF7A5300B4B1F1 /* LaunchScreen.storyboard in Resources */,
+				90FFF6092EE983A900B4B1F1 /* testfile2.txt in Resources */,
 				90FFF6072EE39C4400B4B1F1 /* MessageCell.xib in Resources */,
-				90FFF5FE2EDF7AEA00B4B1F1 /* testfile2.txt in Resources */,
 				90FFF5D22EDF7A5300B4B1F1 /* Assets.xcassets in Resources */,
 				90FFF5FF2EDF7AEA00B4B1F1 /* testfile.txt in Resources */,
 				90FFF5D02EDF7A5000B4B1F1 /* Main.storyboard in Resources */,

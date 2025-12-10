@@ -46,7 +46,6 @@ class CustomerLabel: UILabel {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
 
 class BarberLabel: UILabel {
@@ -64,7 +63,6 @@ class BarberLabel: UILabel {
 
 class ViewController: UIViewController {
 
-    
     @IBOutlet weak var messagesTableView: UITableView!
     var messageList = [String]()
     var messageAlphas = [CGFloat]()
@@ -147,8 +145,6 @@ class ViewController: UIViewController {
     var customerImageViews = [String: UILabel]()
     var barberLabels = [String: UILabel]()
     
-    
-    
     @IBAction func timescaleSliderMoved(_ sender: Any) {
         let sliderValue = (sender as! UISlider).value
         
@@ -161,21 +157,15 @@ class ViewController: UIViewController {
     
     var allowableDrift = [CGPoint]()
     
-//    var viewCustomers = [Customer]()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         timescaleSlider.transform = CGAffineTransform.init(rotationAngle: -CGFloat.pi/2)
-        
         timescaleSlider.frame.origin.y = shopView.frame.origin.y
         timescaleSlider.frame.origin.x = shopView.frame.origin.x - 40.0
         
         timescaleSlider.translatesAutoresizingMaskIntoConstraints = true
-        
-//        timescaleSlider.trailingAnchor.constraint(equalTo: shopView.leadingAnchor, constant: 40.0).isActive = true
-//        timescaleSlider.topAnchor.constraint(equalTo: shopView.topAnchor, constant: 0).isActive = true
     
         let pauseImage = UIImage(systemName: "pause.fill")
         let pauseView = UIImageView(image: pauseImage)
@@ -184,7 +174,6 @@ class ViewController: UIViewController {
         
         pauseView.transform = CGAffineTransform.init(rotationAngle: -CGFloat.pi/2)
         ffView.transform = CGAffineTransform.init(rotationAngle: -CGFloat.pi/2)
-        
         
         barberShop.barberShopDelegate = self
         
@@ -227,31 +216,13 @@ class ViewController: UIViewController {
         barber_label_4.adjustsFontSizeToFitWidth = true
         barber_label_4.clipsToBounds = true
         
-        let benchFrame = waitingBench.frame
-        
         // we're using 50x50 squares for the customer and barber avatars; hopefully screen sizes will always allow the bench to be at least 50 wide
         
-//        let offsetSize = (benchWidthConstraint.constant-200)/4
-        
-//        waitingRoom2LeadingConstraint.constant = offsetSize
-//        waitingRoom3LeadingConstraint.constant = offsetSize
-//        waitingRoom4LeadingConstraint.constant = offsetSize
-        
         let shopFrame = shopView.frame
-//        let shopGradient = CAGradientLayer()
-//        shopGradient.frame = shopView.frame
-//        shopView.layer.insertSublayer(shopGradient, at: 0)
-//        shopGradient.colors = [UIColor.white.cgColor, UIColor.red.cgColor]
-//        shopGradient.startPoint = CGPoint(x: shopFrame.origin.x+shopFrame.width/2, y: shopFrame.origin.y)
-//        shopGradient.startPoint = CGPoint(x: shopFrame.origin.x+shopFrame.width/2, y: shopFrame.origin.y+shopFrame.height)
-        
-    
         allowableDrift.append(CGPoint(x: shopFrame.origin.x+5, y: shopFrame.origin.y))
         allowableDrift.append(CGPoint(x: shopFrame.origin.x-5, y: shopFrame.origin.y))
         allowableDrift.append(CGPoint(x: shopFrame.origin.x, y: shopFrame.origin.y+5))
         allowableDrift.append(CGPoint(x: shopFrame.origin.x, y: shopFrame.origin.y-5))
-        
-//        self.view.bringSubviewToFront(messagesTableView)
     }
 
     override func viewDidLayoutSubviews() {
@@ -344,9 +315,7 @@ class ViewController: UIViewController {
     func updateMessageTable() {
         var i = messageAlphas.count - 1
         
-        
         while i >= 0 {
-            var tableRow = messagesTableView.cellForRow(at: IndexPath(row: i, section: 0))
             messageAlphas[i] -= 0.1
             if messageAlphas[i] <= 0 {
                 messageList.remove(at: i)
@@ -359,65 +328,11 @@ class ViewController: UIViewController {
             messagesTableView.reloadData()
         }
     }
-    
-    
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        let touchPoint = touches.first?.location(in: shopView)
-//
-//        print("touch started")
-        
-//        if let touchedView = self.shopView.) {
-//            for v in touchedView.subviews {
-//                if (v as? CustomerLabel) != nil {
-//                    print("Customer: \((v as! CustomerLabel).customerInfo)")
-//                }
-//
-//                if (v as? BarberLabel) != nil {
-//                    print("Barber: \((v as! BarberLabel).barberInfo)")
-//                }
-//            }
-//        }
-        
-//        let pointInView = shopView.convert(touchPoint!, from: self)
-        
-        
-//        for v in self.view.subviews {
-//            print("Touched View: \(String(describing: view as? UILabel))")
-//            if (v as? CustomerLabel) != nil {
-//                print("Customer: \((v as! CustomerLabel).customerInfo)")
-//            }
-//
-//            if (v as? BarberLabel) != nil {
-//                print("Barber: \((v as! BarberLabel).barberInfo)")
-//            }
-//        }
-        
-        
-//    }
-    
-//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        let touchPoint = touches.first?.location(in: shopView)
-
-//        if let touchedView = self.view.hitTest(touchPoint!, with: event) {
-//            for v in touchedView.subviews {
-//                if (v as? CustomerLabel) != nil {
-//                    print("Touched Customer Label!")
-//                }
-//
-//                if (v as? BarberLabel) != nil {
-//                    print("Touched Barber Label!")
-//                }
-//            }
-//        }
-//    }
 }
 
 extension ViewController: BarberShopDelegate {
-
-    
     func barberWentHome(barber: Barber, chairIndex: Int) {
         
-        let barberList = [chair_1_barber, chair_2_barber, chair_3_barber, chair_4_barber]
         let barberNameLabels = [barber_label_1, barber_label_2, barber_label_3, barber_label_4]
         
         let departingBarberLabel = barberLabels[barber.id.uuidString]
@@ -427,17 +342,11 @@ extension ViewController: BarberShopDelegate {
             barberNameLabels[chairIndex]?.text = ""
         } completion: { _ in
             departingBarberLabel!.removeFromSuperview()
-//            DispatchQueue.main.async {
-//                barberNameLabels[chairIndex]?.text = ""
-//            }
-            
         }
     }
     
-    
     func updateWaitingRoom(waitingCustomers: [Customer]) {
         let waitingRoomSlots = [waitingRoom1, waitingRoom2, waitingRoom3, waitingRoom4]
-        
         
         var i = 0
         
@@ -458,28 +367,17 @@ extension ViewController: BarberShopDelegate {
         let chairs = [chair_1_customer, chair_2_customer, chair_3_customer, chair_4_customer]
         chairs[barberChairNumber]!.text = normalCustomer
         
-//        if waitingRoomSlot < waitingRoomSlots.count-1 {
-//            var i = waitingRoomSlot + 1
-//            while i < waitingRoomSlots.count {
-//                waitingRoomSlots[i-1]?.text = waitingRoomSlots[i]?.text
-//                i += 1
-//            }
-//        }
-        
         let customerLabel = customerImageViews[customer.id.uuidString]
         
         UIView.animate(withDuration: 0.1) {
             customerLabel?.frame.origin =  (waitingRoomSlots[waitingRoomSlot-1]?.frame.origin)!
         }
-        
     }
     
     func barberDidArrive(barber: Barber, barberChairNumber: Int) {
         let barberSlots = [chair_1_barber, chair_2_barber, chair_3_barber, chair_4_barber]
         let barberNameLabels = [barber_label_1, barber_label_2, barber_label_3, barber_label_4]
         
-//        let barberLabel = UILabel(frame: departureSpot.frame)
-//        let barberLabel = BarberLabel(frame: departureSpot.frame)
         let barberLabel = BarberLabel(barberInfo: barber, frame: departureSpot.frame)
         barberLabel.clipsToBounds = true
         barberLabel.layer.cornerRadius = 25.0
@@ -494,30 +392,22 @@ extension ViewController: BarberShopDelegate {
             barberLabel.backgroundColor = .darkGray
         }
         
-        
         barberLabels[barber.id.uuidString] = barberLabel
         
         self.shopView.addSubview(barberLabel)
-//        barberSlots[barberChairNumber]?.text = barber.avatar
+        sendMessage(message: "\(barber.name) started shift")
         
-        
-            UIView.transition(with: barberLabel, duration: 0.2) {
-                barberLabel.frame = barberSlots[barberChairNumber]!.frame
-            } completion: { _ in
-                DispatchQueue.main.async {
-                    barberNameLabels[barberChairNumber]?.text = barber.name
-                }
+        UIView.transition(with: barberLabel, duration: 0.2) {
+            barberLabel.frame = barberSlots[barberChairNumber]!.frame
+        } completion: { _ in
+            DispatchQueue.main.async {
+                barberNameLabels[barberChairNumber]?.text = barber.name
             }
-        
-
-        
+        }
     }
     
     func customerDidArrive(customer: Customer) {
-//        var customerLabel = UILabel(frame: arrivalSpot.frame)
-//        var customerLabel = CustomerLabel(frame: arrivalSpot.frame)
         var customerLabel = CustomerLabel(customerInfo: customer, frame: arrivalSpot.frame)
-        
         customerImageViews[customer.id.uuidString] = customerLabel
         customerLabel.font = UIFont.systemFont(ofSize: 38.0)
         customerLabel.textAlignment = .center
@@ -529,7 +419,6 @@ extension ViewController: BarberShopDelegate {
     func customerMovedtoWaitingRoom(customer: Customer, waitingRoomSlot: Int) {
         let waitingRoomSlots = [waitingRoom1, waitingRoom2, waitingRoom3, waitingRoom4]
         
-//        waitingRoomSlots[waitingRoomSlot-1]?.text = normalCustomer
         let customerLabel = customerImageViews[customer.id.uuidString]
         customerLabel?.text = normalCustomer
         
@@ -543,7 +432,6 @@ extension ViewController: BarberShopDelegate {
         
         let scissors = [scissor_1, scissor_2, scissor_3, scissor_4]
         
-//        chairs[barberChairNumber]!.text = normalCustomer
         let customerLabel = customerImageViews[customer.id.uuidString]
         customerLabel?.text = normalCustomer
         
@@ -607,7 +495,6 @@ extension ViewController: BarberShopDelegate {
     
     func customerDeparted(customer: Customer) {
         let customerLabel = customerImageViews[customer.id.uuidString]
-//        customerLabel?.text = cursingCustomer
         
         if customerLabel == nil {
             return
@@ -676,30 +563,16 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             messageCell.messageLabel.text = messageList[indexPath.row]
         }
         
-        
         let row = indexPath.row
         messageCell.messageLabel.alpha = messageAlphas[row]
         if row == 0 {
            
             messageCell.messageLabel.font = UIFont(name: "Arial Bold", size: 15.0)
-            messageCell.messageLabel.adjustsFontSizeToFitWidth
+            messageCell.messageLabel.adjustsFontSizeToFitWidth = true
         }
         else {
             messageCell.messageLabel.font = UIFont(name: "Arial Bold", size: 10.0)
         }
-        
-//        switch row {
-//        case 0:
-//            messageCell.alpha = 1
-//        case 1:
-//            messageCell.alpha = 0.75
-//        case 2:
-//            messageCell.alpha = 0.5
-//        case 3:
-//            messageCell.alpha = 0.25
-//        default:
-//            debugPrint("Somehow got an invalid row number???")
-//        }
         
         return messageCell
     }
