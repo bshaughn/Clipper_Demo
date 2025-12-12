@@ -76,8 +76,8 @@
                                         <rect key="frame" x="146" y="100" width="160" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <color key="minimumTrackTintColor" systemColor="opaqueSeparatorColor"/>
-                                        <color key="maximumTrackTintColor" systemColor="systemRedColor"/>
+                                        <color key="minimumTrackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="maximumTrackTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <action selector="timescaleSliderMoved:" destination="BYZ-38-t0r" eventType="valueChanged" id="h1K-NN-sy2"/>
                                         </connections>
@@ -338,7 +338,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y6y-hc-TAu">
-                                        <rect key="frame" x="329.66666666666674" y="270" width="50" height="50"/>
+                                        <rect key="frame" x="329.66666666666663" y="270" width="50" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="4dy-Rb-Txn"/>
                                             <constraint firstAttribute="width" secondItem="y6y-hc-TAu" secondAttribute="height" multiplier="1:1" id="lHg-GO-NM2"/>
@@ -614,17 +614,11 @@
         <image name="Door_Closed" width="136" height="220"/>
         <image name="Waiting_Bench" width="1296" height="376"/>
         <image name="Waves" width="1866" height="552"/>
-        <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBrownColor">
             <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

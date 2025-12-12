@@ -122,9 +122,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var waitingRoom4: UILabel!
     
     @IBOutlet weak var waitingRoom4LeadingConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var waitingRoom3LeadingConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var waitingRoom2LeadingConstraint: NSLayoutConstraint!
     
     var waitingOffsetSize:Int? = nil
@@ -141,6 +139,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var wallClock: WallClock!
     
     @IBOutlet weak var timescaleSlider: UISlider!
+    var transportView: UIImageView?
     
     var customerImageViews = [String: UILabel]()
     var barberLabels = [String: UILabel]()
@@ -149,6 +148,21 @@ class ViewController: UIViewController {
         let sliderValue = (sender as! UISlider).value
         
         barberShop.timeUISlider = Double(sliderValue)
+        
+        transportView?.isHidden = true
+        
+        if sliderValue == 0.0 {
+            transportView?.image = pauseImage
+            transportView?.backgroundColor = .white
+            transportView?.layer.opacity = 1.0
+            transportView?.isHidden = false
+        }
+        
+        if sliderValue == 1.0 {
+            transportView?.image = ffImage
+            transportView?.backgroundColor = .black
+            transportView?.isHidden = false
+        }
     }
     
     var currentTime = -1
@@ -157,23 +171,30 @@ class ViewController: UIViewController {
     
     var allowableDrift = [CGPoint]()
     
+//    let pauseImage = UIImage(systemName: "pause.fill")
+//    let ffImage = UIImage(systemName: "forward.fill")
+    let pauseImage = UIImage(systemName: "pause.fill")
+    let ffImage = UIImage(systemName: "forward")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         timescaleSlider.transform = CGAffineTransform.init(rotationAngle: -CGFloat.pi/2)
         timescaleSlider.frame.origin.y = shopView.frame.origin.y
-        timescaleSlider.frame.origin.x = shopView.frame.origin.x - 40.0
+        timescaleSlider.frame.origin.x = shopView.frame.origin.x - 45.0
         
         timescaleSlider.translatesAutoresizingMaskIntoConstraints = true
-    
-        let pauseImage = UIImage(systemName: "pause.fill")
-        let pauseView = UIImageView(image: pauseImage)
-        let ffImage = UIImage(systemName: "forward.fill")
-        let ffView = UIImageView(image: ffImage)
         
-        pauseView.transform = CGAffineTransform.init(rotationAngle: -CGFloat.pi/2)
-        ffView.transform = CGAffineTransform.init(rotationAngle: -CGFloat.pi/2)
+        transportView = UIImageView(frame: CGRect(x: shopView.frame.origin.x - 50.0, y: timescaleSlider.frame.height + 50, width: 40.0, height: 40.0))
+        transportView?.backgroundColor = .clear
+        transportView?.contentMode = .scaleAspectFit
+        timescaleSlider.superview?.addSubview(transportView!)
+    
+        
+//        let pauseView = UIImageView(image: pauseImage)
+        
+//        let ffView = UIImageView(image: ffImage)
         
         barberShop.barberShopDelegate = self
         
@@ -232,6 +253,8 @@ class ViewController: UIViewController {
             waitingRoom2LeadingConstraint.constant = CGFloat(waitingOffsetSize!)
             waitingRoom3LeadingConstraint.constant = CGFloat(waitingOffsetSize!)
             waitingRoom4LeadingConstraint.constant = CGFloat(waitingOffsetSize!)
+            
+            debugPrint("timescale slider info:  \(timescaleSlider.frame.height), \(timescaleSlider.frame.width)")
         }
     }
     
