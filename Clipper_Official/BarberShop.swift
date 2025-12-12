@@ -26,7 +26,7 @@ protocol BarberShopDelegate {
     func sendMessage(message:String)
 }
 
-let READ_EVENTS_FROM_FILE = false  // Id rather do this with Swift flags; for demo we'll just use a const
+let READ_EVENTS_FROM_FILE = false  // Id rather do this with Swift flags; for demo we'll just use a global const
 
 struct Barber: Identifiable {
     let id: UUID
@@ -104,7 +104,7 @@ struct ShiftTwo {
 }
 
 class BarberShop: ObservableObject {
-    let MAX_TIMESCALE = 22 // we'll try a 1-10 timescale, with 10 being the fastest. 0 is pause
+    let MAX_TIMESCALE = 22 // we'll divide the timescale into 22 increments for demo. 0 is pause
     let MIN_TIMESCALE = 0
     var MIN_TIMEBUFFER = 80
     
@@ -124,7 +124,8 @@ class BarberShop: ObservableObject {
     
     var timeUISlider = 0.1 {
         didSet {
-            timeScale = 22 - Int(22.0*timeUISlider)
+//            timeScale = 22 - Int(22.0*timeUISlider)
+            timeScale = MAX_TIMESCALE - Int(Double(MAX_TIMESCALE)*timeUISlider)
             
             if timeUISlider >= 0 && timeUISlider <= 0.4 {
                 MIN_TIMEBUFFER = 80
@@ -139,7 +140,7 @@ class BarberShop: ObservableObject {
             }
             
             if timeUISlider > 0.95 {
-                MIN_TIMEBUFFER = -21 // gasp!
+                MIN_TIMEBUFFER = self.timeBuffer - 1 // look in timerEnabled for why this works
             }
         }
     }
@@ -176,8 +177,7 @@ class BarberShop: ObservableObject {
     
     var timeBuffer = 2
     var eventQueue = EventHeap()
-//    let bgQ = DispatchQueue(label: "default bg", qos: .background , attributes: .concurrent)
-    let bgQ = DispatchQueue.global(qos: .background)
+    let bgQ = DispatchQueue.global(qos: .background)  //background thread for event processing
     
     var barbers = [Barber]()
     var chairs = [BarberChair(id: 0), BarberChair(id:1), BarberChair(id:2), BarberChair(id:3)]
@@ -186,7 +186,7 @@ class BarberShop: ObservableObject {
     var customers = [Customer]()
     var customerNumber:Int = 1 {
         didSet {
-            customerNumber  = customerNumber % 1000  //if we want to try to handle more than 1000 customers, increase this
+            customerNumber  = customerNumber % 1000  //if we want to try to handle more than 1000 simultaneous customers, increase this
         }
     }
     
@@ -287,7 +287,7 @@ class BarberShop: ObservableObject {
         }
     }
     
-    //also we'll put a timer here that will count "minutes". Compare seconds to timescale+buffer to dequeue events
+    //Set up a timer here that will be used to count "minutes". Compare seconds to timescale+buffer to dequeue events
     
     init() {
         timeSlider = 1.0
@@ -295,7 +295,7 @@ class BarberShop: ObservableObject {
         
         if READ_EVENTS_FROM_FILE {
             bgQ.sync(flags: .barrier) {
-                if let path = Bundle.main.path(forResource: "testfile2", ofType: "txt") {
+                if let path = Bundle.main.path(forResource: "testfile", ofType: "txt") {
                     let fileURL = URL(fileURLWithPath: path)
                         do {
                             try readTextFileLines(from: fileURL)
@@ -338,6 +338,9 @@ class BarberShop: ObservableObject {
             return
         }
         
+        // demo is dividing customer arrival times into 3 groups: before open, during open, after close
+        //   if this was going to production this section would get refactored into an API
+        //   This implementation is ok for demo
         if currentTime < 540 || currentTime > 1020 {
             
             if !READ_EVENTS_FROM_FILE {
@@ -423,7 +426,6 @@ class BarberShop: ObservableObject {
             chairs[freeChairIndex!].takeCustomer(newCustomer: newCustomer)
             
             // update the copy of the customer in the customers array
-            
             if (customers.first(where: { c in
                 c.id == chairs[freeChairIndex!].customer!.id
             }) != nil) {
@@ -530,13 +532,10 @@ class BarberShop: ObservableObject {
                     customers[customerIndex!] = chairs[customerChair[0].id].customer!
                 }
                 
-//                updateDebugCustomers()
-                    
                 let finishHaircutEvent = ClipperEvent(id: UUID(), ts: chairs[customerChair[0].id].customer!.haircutFinish, type: .customerFinishedHaircut, owner: seatedCustomer!.id)
                 eventQueue.addEvent(event: finishHaircutEvent)
                 
                 if barberShopDelegate != nil {
-//                    barberShopDelegate?.customerMovedFromWatingRoomToChair(customer: customers[customerIndex!], waitingRoomSlot: 0, barberChairNumber: customerChair[0].id)
                     barberShopDelegate?.customerMovedtoBarberChair(customer: nextCustomer, barberChairNumber: customerChair[0].id)
                     
                     barberShopDelegate?.updateWaitingRoom(waitingCustomers: waitingRoom)
@@ -545,6 +544,7 @@ class BarberShop: ObservableObject {
         }
     }
     
+    // Separate event handlers for customer reactions in case we want different behavior based on reaction
     func customerSatisfied(happyCustomer: Customer) {
         if barberShopDelegate != nil {
             barberShopDelegate?.customerSatisfied(customer: happyCustomer)
@@ -638,7 +638,6 @@ class BarberShop: ObservableObject {
             
             if barberShopDelegate != nil {
                 barberShopDelegate?.barberDidArrive(barber: barber, barberChairNumber: freeChairIndex!)
-//                barberShopDelegate?.sendMessage(message: "\(barber.name) started shift")
             }
             
         }
@@ -739,6 +738,7 @@ class BarberShop: ObservableObject {
             }
         
             // originally I thought the customers could be disappointed with their haircut
+            //  I'm leaving this here in case we want to add that :)
 //            let satisfactionOdds = Float.random(in: 0.0...1.0)
 //            if satisfactionOdds <= 0.3 {
 //                customerDisappointed(disappointedCustomer: customer)
@@ -762,9 +762,10 @@ class BarberShop: ObservableObject {
 
         if te {
             DispatchQueue.main.async { [self] in
+                // If you want to make major timescale changes, start here:
                 timer = Timer.scheduledTimer(withTimeInterval: 0.0075 , repeats: true, block: { [weak self] timer in
                     guard let self = self else {
-                                    timer.invalidate() // Invalidate if self is gone
+                                    timer.invalidate()
                                     return
                                 }
                     

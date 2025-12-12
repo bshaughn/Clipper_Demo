@@ -151,7 +151,7 @@ class ViewController: UIViewController {
         
         transportView?.isHidden = true
         
-        if sliderValue == 0.0 {
+        if sliderValue < (1/22) {
             
             if transportView?.isHidden == true {
                 transportView?.isHidden = false
@@ -159,8 +159,7 @@ class ViewController: UIViewController {
                 transportView?.backgroundColor = .white
             }
             
-
-            //maybe add haptic?
+            //maybe add haptic? 
         }
         
         if sliderValue > 0.7 {
@@ -188,8 +187,6 @@ class ViewController: UIViewController {
     
     var allowableDrift = [CGPoint]()
     
-//    let pauseImage = UIImage(systemName: "pause.fill")
-//    let ffImage = UIImage(systemName: "forward.fill")
     let pauseImage = UIImage(systemName: "pause.fill")
     let ffImage = UIImage(systemName: "forward")
     
@@ -208,11 +205,6 @@ class ViewController: UIViewController {
         transportView?.contentMode = .scaleAspectFit
         timescaleSlider.superview?.addSubview(transportView!)
     
-        
-//        let pauseView = UIImageView(image: pauseImage)
-        
-//        let ffView = UIImageView(image: ffImage)
-        
         barberShop.barberShopDelegate = self
         
         wallClock.setTime(st: barberShop.currentTime)
@@ -264,14 +256,12 @@ class ViewController: UIViewController {
     }
 
     override func viewDidLayoutSubviews() {
-        if waitingOffsetSize == nil && waitingBench.frame.width > 50  {  // wait until autolayout has chosed the final length for the bench
+        if waitingOffsetSize == nil && waitingBench.frame.width > 50  {  // wait until autolayout has chosen the final length for the bench
             waitingOffsetSize = (Int(waitingBench.frame.width)-200)/4
             
             waitingRoom2LeadingConstraint.constant = CGFloat(waitingOffsetSize!)
             waitingRoom3LeadingConstraint.constant = CGFloat(waitingOffsetSize!)
             waitingRoom4LeadingConstraint.constant = CGFloat(waitingOffsetSize!)
-            
-            debugPrint("timescale slider info:  \(timescaleSlider.frame.height), \(timescaleSlider.frame.width)")
         }
     }
     
@@ -375,13 +365,14 @@ extension ViewController: BarberShopDelegate {
         
         let barberNameLabels = [barber_label_1, barber_label_2, barber_label_3, barber_label_4]
         
-        let departingBarberLabel = barberLabels[barber.id.uuidString]
+        var departingBarberLabel = barberLabels[barber.id.uuidString]
         
         UIView.transition(with: departingBarberLabel!, duration: 0.2) { [self] in
             departingBarberLabel!.frame = departureSpot.frame
             barberNameLabels[chairIndex]?.text = ""
         } completion: { _ in
             departingBarberLabel!.removeFromSuperview()
+            departingBarberLabel = nil
         }
     }
     
@@ -447,7 +438,7 @@ extension ViewController: BarberShopDelegate {
     }
     
     func customerDidArrive(customer: Customer) {
-        var customerLabel = CustomerLabel(customerInfo: customer, frame: arrivalSpot.frame)
+        let customerLabel = CustomerLabel(customerInfo: customer, frame: arrivalSpot.frame)
         customerImageViews[customer.id.uuidString] = customerLabel
         customerLabel.font = UIFont.systemFont(ofSize: 38.0)
         customerLabel.textAlignment = .center
@@ -534,7 +525,7 @@ extension ViewController: BarberShopDelegate {
     }
     
     func customerDeparted(customer: Customer) {
-        let customerLabel = customerImageViews[customer.id.uuidString]
+        var customerLabel = customerImageViews[customer.id.uuidString]
         
         if customerLabel == nil {
             return
@@ -549,8 +540,8 @@ extension ViewController: BarberShopDelegate {
                 
             } completion: { _ in
                 customerLabel?.removeFromSuperview()
+                customerLabel = nil
                 self.customerImageViews.removeValue(forKey: customer.id.uuidString)
-                // look here
                 self.updateWaitingRoom(waitingCustomers: self.barberShop.waitingRoom)
             }
         }
