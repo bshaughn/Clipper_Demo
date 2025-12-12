@@ -76,8 +76,8 @@
                                         <rect key="frame" x="146" y="100" width="160" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <color key="minimumTrackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <color key="maximumTrackTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="minimumTrackTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="maximumTrackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <action selector="timescaleSliderMoved:" destination="BYZ-38-t0r" eventType="valueChanged" id="h1K-NN-sy2"/>
                                         </connections>
@@ -372,14 +372,6 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Clipper_Poster" translatesAutoresizingMaskIntoConstraints="NO" id="ePF-dL-2rf">
-                                        <rect key="frame" x="20" y="88" width="131" height="77"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" priority="750" constant="146" id="42V-EQ-WHP"/>
-                                            <constraint firstAttribute="width" secondItem="ePF-dL-2rf" secondAttribute="height" multiplier="73:43" id="Lgl-Zh-Zs1"/>
-                                            <constraint firstAttribute="height" priority="750" constant="86" id="NsQ-So-May"/>
-                                        </constraints>
-                                    </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="753" text="CLIPPER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yb2-J9-h6Y">
                                         <rect key="frame" x="20" y="51" width="131" height="27"/>
                                         <constraints>
@@ -391,6 +383,14 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" verticalCompressionResistancePriority="748" image="Clipper_Poster" translatesAutoresizingMaskIntoConstraints="NO" id="ePF-dL-2rf">
+                                        <rect key="frame" x="20" y="78" width="131" height="77"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" priority="750" constant="146" id="42V-EQ-WHP"/>
+                                            <constraint firstAttribute="width" secondItem="ePF-dL-2rf" secondAttribute="height" multiplier="73:43" id="Lgl-Zh-Zs1"/>
+                                            <constraint firstAttribute="height" priority="750" constant="86" id="NsQ-So-May"/>
+                                        </constraints>
+                                    </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nEa-6J-38i" customClass="WallClock" customModule="Clipper_Official" customModuleProvider="target">
                                         <rect key="frame" x="25.666666666666686" y="8" width="120" height="33"/>
                                         <subviews>
@@ -434,6 +434,7 @@
                                     <constraint firstItem="cw7-zY-Lk4" firstAttribute="top" secondItem="UhQ-Tj-X47" secondAttribute="top" id="69V-22-tRb"/>
                                     <constraint firstItem="Yb2-J9-h6Y" firstAttribute="top" secondItem="nEa-6J-38i" secondAttribute="bottom" constant="10" id="7Fe-UX-5FI"/>
                                     <constraint firstItem="we1-ed-QPl" firstAttribute="leading" secondItem="0S6-Gh-rDP" secondAttribute="trailing" id="81G-sY-0fn"/>
+                                    <constraint firstItem="yxU-4t-9sn" firstAttribute="top" secondItem="ePF-dL-2rf" secondAttribute="bottom" priority="750" constant="10" id="8nj-p6-QDm"/>
                                     <constraint firstItem="rTL-yN-e24" firstAttribute="leading" secondItem="NhJ-Aj-hsN" secondAttribute="trailing" constant="10" id="AFr-Pz-go4"/>
                                     <constraint firstItem="JNo-KA-Dxa" firstAttribute="top" secondItem="sYW-3j-BO5" secondAttribute="bottom" constant="-1" id="B3j-tb-Gfz"/>
                                     <constraint firstItem="xyI-o0-fJl" firstAttribute="top" secondItem="RcS-Kd-2gU" secondAttribute="top" id="D68-pn-OrK"/>
@@ -466,7 +467,7 @@
                                     <constraint firstAttribute="bottom" secondItem="rTL-yN-e24" secondAttribute="bottom" id="Ovc-2k-aGM"/>
                                     <constraint firstAttribute="trailing" secondItem="FVT-f1-cfk" secondAttribute="trailing" constant="63" id="P6B-zN-wxi"/>
                                     <constraint firstAttribute="trailing" secondItem="yxU-4t-9sn" secondAttribute="trailing" id="PEA-hB-Mpk"/>
-                                    <constraint firstItem="ePF-dL-2rf" firstAttribute="top" secondItem="Yb2-J9-h6Y" secondAttribute="bottom" constant="10" id="PXK-LN-ZwZ"/>
+                                    <constraint firstItem="ePF-dL-2rf" firstAttribute="top" secondItem="Yb2-J9-h6Y" secondAttribute="bottom" id="PXK-LN-ZwZ"/>
                                     <constraint firstItem="6X8-ah-Bds" firstAttribute="centerX" secondItem="UhQ-Tj-X47" secondAttribute="centerX" id="PfO-wd-5fp"/>
                                     <constraint firstAttribute="bottom" secondItem="DgS-IJ-XHv" secondAttribute="bottom" constant="-27" id="S5v-cL-0Ii"/>
                                     <constraint firstItem="1m2-Ms-mzI" firstAttribute="trailing" secondItem="RcS-Kd-2gU" secondAttribute="trailing" constant="-15" id="T3e-XL-qpy"/>

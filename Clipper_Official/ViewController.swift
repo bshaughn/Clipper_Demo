@@ -152,16 +152,33 @@ class ViewController: UIViewController {
         transportView?.isHidden = true
         
         if sliderValue == 0.0 {
-            transportView?.image = pauseImage
-            transportView?.backgroundColor = .white
-            transportView?.layer.opacity = 1.0
-            transportView?.isHidden = false
+            
+            if transportView?.isHidden == true {
+                transportView?.isHidden = false
+                transportView?.image = pauseImage
+                transportView?.backgroundColor = .white
+            }
+            
+
+            //maybe add haptic?
         }
         
-        if sliderValue == 1.0 {
-            transportView?.image = ffImage
-            transportView?.backgroundColor = .black
-            transportView?.isHidden = false
+        if sliderValue > 0.7 {
+            
+            if transportView?.isHidden == true {
+                transportView?.image = ffImage
+                transportView?.backgroundColor = .black
+                transportView?.isHidden = false
+                transportView?.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                timescaleSlider.minimumTrackTintColor = .black
+            }
+        }
+        
+        if sliderValue > 0.95 {
+            transportView?.backgroundColor = .yellow
+            transportView?.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+            transportView?.contentMode = .scaleToFill
+            timescaleSlider.minimumTrackTintColor = .yellow
         }
     }
     

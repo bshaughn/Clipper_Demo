@@ -130,12 +130,16 @@ class BarberShop: ObservableObject {
                 MIN_TIMEBUFFER = 80
             }
             
-            if timeUISlider > 0.4 && timeUISlider <= 0.8 {
+            if timeUISlider > 0.4 && timeUISlider <= 0.7 {
                 MIN_TIMEBUFFER = 15
             }
             
-            if timeUISlider > 0.8 {
+            if timeUISlider > 0.7 {
                 MIN_TIMEBUFFER = 3
+            }
+            
+            if timeUISlider > 0.95 {
+                MIN_TIMEBUFFER = -21 // gasp!
             }
         }
     }
